@@ -1,0 +1,26 @@
+<h1>BookMyShow</h1>
+
+<% if logged_in? %>
+  <p>Welcome, <%= current_user.name %>!</p>
+
+  <p>
+    <%= link_to "My Profile", me_path %>
+  </p>
+
+  <% if current_user.has_role?("SUPER_ADMIN") %>
+    <p>
+      <%= link_to "Admin", admin_path %>
+    </p>
+  <% end %>
+
+  <%= button_to "Logout", logout_path, method: :delete %>
+
+<% else %>
+  <p>
+    <%= link_to "Login", login_path %>
+  </p>
+
+  <p>
+    <%= link_to "Register", register_path %>
+  </p>
+<% end %>

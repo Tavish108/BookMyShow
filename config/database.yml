@@ -9,7 +9,11 @@ development:
 
 test:
   <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  database: book_my_show_test
+  username: tavishsharma
+  password: root
+  host: localhost
+  port: 5432
 
 production:
   primary:
