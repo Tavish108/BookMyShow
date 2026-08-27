@@ -1,0 +1,22 @@
+class User < ApplicationRecord
+
+  has_secure_password
+
+  has_many :user_roles, dependent: :destroy
+  has_many :roles, through: :user_roles
+
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
+
+  normalizes :email, with: ->(email) { email.strip.downcase } #" tavish@gmail.com " -> "tavish@gmail.com"
+
+  def has_role?(role_name)
+    roles.exists?(name: role_name)
+  end
+end
+
+
+
+# user.roles
+# user.user_roles
+# user.has_role?("USER")

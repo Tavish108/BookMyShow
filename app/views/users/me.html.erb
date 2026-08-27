@@ -1,0 +1,30 @@
+<h1>My Profile</h1>
+
+<p>
+  <strong>Name:</strong>
+  <%= current_user.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= current_user.email %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= current_user.phone %>
+</p>
+
+<h2>Roles</h2>
+
+<ul>
+  <% current_user.roles.each do |role| %>
+    <li><%= role.name %></li>
+  <% end %>
+</ul>
+
+<p>
+  <%= link_to "Home", root_path %>
+</p>
+
+<%= button_to "Logout", logout_path, method: :delete %>

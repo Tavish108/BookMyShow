@@ -1,0 +1,13 @@
+<h1>Theatre Admin Dashboard</h1>
+
+<p>Welcome, <%= current_user.name %>!</p>
+
+<p>Theatre management will appear here.</p>
+
+<!-- Theatre CRUD will be linked here later. -->
+
+<p>
+  <%= link_to "My Profile", me_path %>
+</p>
+
+<%= button_to "Logout", logout_path, method: :delete %>

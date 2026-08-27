@@ -1,0 +1,18 @@
+<h1>Super Admin Dashboard</h1>
+
+<p>Welcome, <%= current_user.name %>!</p>
+
+<h2>Administration</h2>
+
+<ul>
+  <li>User Management</li>
+  <li>Role Management</li>
+  <li>Theatre Administration</li>
+  <li>Content Administration</li>
+</ul>
+
+<p>
+  <%= link_to "My Profile", me_path %>
+</p>
+
+<%= button_to "Logout", logout_path, method: :delete %>
