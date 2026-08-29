@@ -14,6 +14,11 @@
       </p>
 
       <p>
+        <strong>Genres:</strong>
+        <%= movie.genres.map(&:name).join(", ") %>
+      </p>
+
+      <p>
         <strong>Duration:</strong>
         <%= movie.duration_minutes %> minutes
       </p>

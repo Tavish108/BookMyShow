@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_27_144435) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_29_180012) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,10 +24,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_27_144435) do
     t.index ["theatre_id"], name: "index_auditoria_on_theatre_id"
   end
 
+  create_table "genres", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_genres_on_name", unique: true
+  end
+
   create_table "languages", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "movie_genres", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "genre_id", null: false
+    t.bigint "movie_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_movie_genres_on_genre_id"
+    t.index ["movie_id"], name: "index_movie_genres_on_movie_id"
   end
 
   create_table "movies", force: :cascade do |t|
@@ -104,6 +120,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_27_144435) do
   end
 
   add_foreign_key "auditoria", "theatres"
+  add_foreign_key "movie_genres", "genres"
+  add_foreign_key "movie_genres", "movies"
   add_foreign_key "movies", "languages"
   add_foreign_key "movies", "users", column: "created_by_id"
   add_foreign_key "seats", "auditoria"

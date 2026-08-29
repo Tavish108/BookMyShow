@@ -55,6 +55,24 @@
                                { prompt: "Select language" } %>
   </div>
 
+ <br>
+
+ <div>
+  <%= form.label :genre_ids, "Genres" %>
+
+  <% @genres.each do |genre| %>
+    <div>
+      <%= check_box_tag "movie[genre_ids][]",
+                        genre.id,
+                        @movie.genre_ids.include?(genre.id) %>
+
+      <%= label_tag "movie_genre_ids_#{genre.id}", genre.name %>
+    </div>
+  <% end %>
+</div>
+
+
+
   <br>
 
   <div>

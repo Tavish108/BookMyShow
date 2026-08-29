@@ -6,7 +6,7 @@ class MoviesController < ApplicationController
 
   def index
     if current_user.has_role?("SUPER_ADMIN")
-      @movies = Movie.includes(:language)
+      @movies = Movie.includes(:language, :genres)
     elsif current_user.has_role?("CONTENT_ADMIN")
       @movies = current_user.created_movies.includes(:language)
     else
@@ -14,12 +14,14 @@ class MoviesController < ApplicationController
     end
   end
 
-  def show
-  end
+ def show
+  @movie = Movie.includes(:language, :genres).find(params[:id])
+ end
 
   def new
     @movie = Movie.new
     @languages = Language.order(:name)
+    @genres = Genre.order(:name)
   end
 
   def create
@@ -29,12 +31,14 @@ class MoviesController < ApplicationController
       redirect_to movie_path(@movie), notice: "Movie created successfully."
     else
       @languages = Language.order(:name)
+      @genres = Genre.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
   @languages = Language.order(:name)
+  @genres = Genre.order(:name)
   end
 
   def update
@@ -42,6 +46,7 @@ class MoviesController < ApplicationController
       redirect_to movie_path(@movie), notice: "Movie updated successfully."
     else
       @languages = Language.order(:name)
+      @genres = Genre.order(:name)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -55,7 +60,7 @@ class MoviesController < ApplicationController
   private
 
   def set_movie
-    @movie = Movie.find(params[:id])
+   @movie = Movie.includes(:language, :genres).find(params[:id])
   end
 
   def movie_params
@@ -68,14 +73,15 @@ class MoviesController < ApplicationController
       :certificate,
       :status,
       :poster_url,
-      :trailer_url
+      :trailer_url,
+      genre_ids: []
     )
   end
 
   def require_content_admin_or_super_admin
     require_role("CONTENT_ADMIN", "SUPER_ADMIN")
   end
-  
+
   def authorize_movie_management
     return if current_user.has_role?("SUPER_ADMIN")
     return if current_user.has_role?("CONTENT_ADMIN") &&
