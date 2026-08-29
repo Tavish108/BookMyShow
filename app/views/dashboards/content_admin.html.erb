@@ -1,0 +1,13 @@
+<h1>Content Admin Dashboard</h1>
+
+<p>Welcome, <%= current_user.name %>!</p>
+
+<p>Movie and content management will appear here.</p>
+
+<!-- Movie/Genre/Language management will be linked here later. -->
+
+<p>
+  <%= link_to "My Profile", me_path %>
+</p>
+
+<%= button_to "Logout", logout_path, method: :delete %>
