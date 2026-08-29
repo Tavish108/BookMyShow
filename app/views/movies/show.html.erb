@@ -1,2 +1,65 @@
-<h1>Movies#show</h1>
-<p>Find me in app/views/movies/show.html.erb</p>
+<h1><%= @movie.title %></h1>
+
+<p>
+  <strong>Description:</strong>
+  <%= @movie.description %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @movie.duration_minutes %> minutes
+</p>
+
+<p>
+  <strong>Release Date:</strong>
+  <%= @movie.release_date %>
+</p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @movie.language.name %>
+</p>
+
+<p>
+  <strong>Certificate:</strong>
+  <%= @movie.certificate %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @movie.status %>
+</p>
+
+<% if @movie.poster_url.present? %>
+  <p>
+    <strong>Poster:</strong>
+  </p>
+
+  <%= image_tag @movie.poster_url,
+                alt: @movie.title,
+                width: 250 %>
+<% end %>
+
+<% if @movie.trailer_url.present? %>
+  <p>
+    <%= link_to "Watch Trailer", @movie.trailer_url, target: "_blank" %>
+  </p>
+<% end %>
+
+<hr>
+
+<% if current_user.has_role?("SUPER_ADMIN") ||
+      @movie.created_by_id == current_user.id %>
+
+  <%= link_to "Edit Movie", edit_movie_path(@movie) %>
+
+  <%= button_to "Delete Movie",
+                movie_path(@movie),
+                method: :delete,
+                data: { turbo_confirm: "Are you sure?" } %>
+
+<% end %>
+
+<br>
+
+<%= link_to "Back to Movies", movies_path %>

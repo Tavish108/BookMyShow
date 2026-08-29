@@ -19,7 +19,7 @@ class MoviesController < ApplicationController
 
   def new
     @movie = Movie.new
-    @languages = Language.all
+    @languages = Language.order(:name)
   end
 
   def create
@@ -28,20 +28,20 @@ class MoviesController < ApplicationController
     if @movie.save
       redirect_to movie_path(@movie), notice: "Movie created successfully."
     else
-      @languages = Language.all
+      @languages = Language.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @languages = Language.all
+  @languages = Language.order(:name)
   end
 
   def update
     if @movie.update(movie_params)
       redirect_to movie_path(@movie), notice: "Movie updated successfully."
     else
-      @languages = Language.all
+      @languages = Language.order(:name)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -75,10 +75,11 @@ class MoviesController < ApplicationController
   def require_content_admin_or_super_admin
     require_role("CONTENT_ADMIN", "SUPER_ADMIN")
   end
-
+  
   def authorize_movie_management
     return if current_user.has_role?("SUPER_ADMIN")
-    return if @movie.created_by_id == current_user.id
+    return if current_user.has_role?("CONTENT_ADMIN") &&
+              @movie.created_by_id == current_user.id
 
     redirect_to movies_path, alert: "You are not authorized to manage this movie."
   end
