@@ -10,6 +10,7 @@ class DashboardsController < ApplicationController
   end
 
   def content_admin
+     @movies = current_user.created_movies.includes(:language)
     require_role("CONTENT_ADMIN", "SUPER_ADMIN")
   end
 

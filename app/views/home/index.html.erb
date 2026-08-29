@@ -7,6 +7,14 @@
     <%= link_to "My Profile", me_path %>
   </p>
 
+ 
+
+  <% if current_user.has_role?("CONTENT_ADMIN") %>
+    <p>
+      <%= link_to "Dashboard",  content_admin_dashboard_path %>
+    </p>
+  <% end %>
+
   <% if current_user.has_role?("SUPER_ADMIN") %>
     <p>
       <%= link_to "Admin", admin_path %>

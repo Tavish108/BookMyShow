@@ -10,6 +10,14 @@ class User < ApplicationRecord
 
   normalizes :email, with: ->(email) { email.strip.downcase } #" tavish@gmail.com " -> "tavish@gmail.com"
 
+  
+  has_many :created_movies,
+         class_name: "Movie",
+         foreign_key: :created_by_id,
+         dependent: :restrict_with_error
+
+
+
   def has_role?(role_name)
     roles.exists?(name: role_name)
   end

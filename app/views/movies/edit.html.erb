@@ -1,0 +1,118 @@
+<h1>Edit Movie</h1>
+
+<%= form_with model: @movie, local: true do |form| %>
+
+  <% if @movie.errors.any? %>
+    <div>
+      <h2>
+        <%= pluralize(@movie.errors.count, "error") %>
+        prevented this movie from being updated:
+      </h2>
+
+      <ul>
+        <% @movie.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :description %><br>
+    <%= form.text_area :description, rows: 5 %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :duration_minutes, "Duration (minutes)" %><br>
+    <%= form.number_field :duration_minutes, min: 1 %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :release_date %><br>
+    <%= form.date_field :release_date %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :language_id, "Language" %><br>
+
+    <%= form.collection_select :language_id,
+                               @languages,
+                               :id,
+                               :name,
+                               { prompt: "Select language" } %>
+  </div>
+
+  <br>
+
+  <div>
+  <%= form.label :genre_ids, "Genres" %>
+
+  <% @genres.each do |genre| %>
+    <div>
+      <%= check_box_tag "movie[genre_ids][]",
+                        genre.id,
+                        @movie.genre_ids.include?(genre.id) %>
+
+      <%= label_tag "movie_genre_ids_#{genre.id}", genre.name %>
+    </div>
+  <% end %>
+</div>
+
+
+  <br>
+
+  <div>
+    <%= form.label :certificate %><br>
+
+    <%= form.select :certificate,
+                    ["U", "U/A", "A"],
+                    { prompt: "Select certificate" } %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :status %><br>
+
+    <%= form.select :status,
+                    ["DRAFT", "PUBLISHED", "ARCHIVED"] %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :poster_url, "Poster URL" %><br>
+    <%= form.url_field :poster_url %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :trailer_url, "Trailer URL" %><br>
+    <%= form.url_field :trailer_url %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.submit "Update Movie" %>
+  </div>
+
+<% end %>
+
+<br>
+
+<%= link_to "Back to Movie", movie_path(@movie) %>

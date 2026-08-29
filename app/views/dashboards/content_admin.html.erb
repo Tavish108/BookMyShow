@@ -1,13 +1,25 @@
 <h1>Content Admin Dashboard</h1>
 
-<p>Welcome, <%= current_user.name %>!</p>
+<h2>My Movies</h2>
 
-<p>Movie and content management will appear here.</p>
+<% if @movies.any? %>
+  <% @movies.each do |movie| %>
+    <div>
+      <h3>
+        <%= link_to movie.title, movie_path(movie) %>
+      </h3>
 
-<!-- Movie/Genre/Language management will be linked here later. -->
+      <p>
+        Language: <%= movie.language.name %>
+      </p>
 
-<p>
-  <%= link_to "My Profile", me_path %>
-</p>
+      <p>
+        Status: <%= movie.status %>
+      </p>
+    </div>
+  <% end %>
+<% else %>
+  <p>You haven't added any movies yet.</p>
+<% end %>
 
-<%= button_to "Logout", logout_path, method: :delete %>
+<%= link_to "Add Movie", new_movie_path %>
