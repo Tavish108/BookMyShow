@@ -1,2 +1,58 @@
-<h1>Seats#show</h1>
-<p>Find me in app/views/seats/show.html.erb</p>
+<h1>
+  Seat <%= @seat.row_name %><%= @seat.seat_number %>
+</h1>
+
+<p>
+  <strong>Theatre:</strong>
+  <%= @theatre.name %>
+</p>
+
+<p>
+  <strong>Auditorium:</strong>
+  <%= @auditorium.name %>
+</p>
+
+<p>
+  <strong>Row:</strong>
+  <%= @seat.row_name %>
+</p>
+
+<p>
+  <strong>Seat Number:</strong>
+  <%= @seat.seat_number %>
+</p>
+
+<p>
+  <strong>Seat Type:</strong>
+  <%= @seat.seat_type %>
+</p>
+
+<p>
+  <strong>Seat Category:</strong>
+  <%= @seat.seat_category %>
+</p>
+
+<hr>
+
+<%= link_to "Edit Seat",
+            edit_theatre_auditorium_seat_path(
+              @theatre,
+              @auditorium,
+              @seat
+            ) %>
+
+<br>
+
+<%= link_to "Back to Seats",
+            theatre_auditorium_seats_path(
+              @theatre,
+              @auditorium
+            ) %>
+
+<br>
+
+<%= link_to "Back to Auditorium",
+            theatre_auditorium_path(
+              @theatre,
+              @auditorium
+            ) %>

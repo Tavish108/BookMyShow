@@ -1,2 +1,88 @@
-<h1>Theatres#show</h1>
-<p>Find me in app/views/theatres/show.html.erb</p>
+<h1><%= @theatre.name %></h1>
+
+<h2>Theatre Information</h2>
+
+<p>
+  <strong>Address:</strong>
+  <%= @theatre.address %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @theatre.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @theatre.state %>
+</p>
+
+<p>
+  <strong>Postal Code:</strong>
+  <%= @theatre.postal_code %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @theatre.phone %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @theatre.email %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @theatre.status %>
+</p>
+
+<hr>
+
+<h2>Auditoriums</h2>
+
+<% if @auditoriums.any? %>
+  <% @auditoriums.each do |auditorium| %>
+    <div>
+      <h3><%= auditorium.name %></h3>
+
+      <p>
+        <strong>Screen Type:</strong>
+        <%= auditorium.screen_type %>
+      </p>
+
+      <p>
+        <strong>Capacity:</strong>
+        <%= auditorium.capacity %>
+      </p>
+
+      <p>
+        <strong>Seats:</strong>
+        <%= auditorium.seats.count %>
+      </p>
+
+      <%= link_to "View Auditorium",
+                  theatre_auditorium_path(@theatre, auditorium) %>
+    </div>
+
+    <hr>
+  <% end %>
+<% else %>
+  <p>No auditoriums have been added yet.</p>
+<% end %>
+
+<%= link_to "Add Auditorium",
+            new_theatre_auditorium_path(@theatre) %>
+
+<br><br>
+
+<p>
+  <%= link_to "View All Auditoriums",
+              theatre_auditoriums_path(@theatre) %>
+</p>
+
+<%= link_to "Edit Theatre", edit_theatre_path(@theatre) %>
+
+<br>
+
+<%= link_to "Back to Theatres", theatres_path %>

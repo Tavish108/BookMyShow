@@ -1,2 +1,68 @@
-<h1>Theatres#edit</h1>
-<p>Find me in app/views/theatres/edit.html.erb</p>
+<h1>Edit Theatre</h1>
+
+<%= form_with model: @theatre do |form| %>
+
+  <% if @theatre.errors.any? %>
+    <div>
+      <h2>
+        <%= pluralize(@theatre.errors.count, "error") %>
+        prevented this theatre from being saved:
+      </h2>
+
+      <ul>
+        <% @theatre.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :address %><br>
+    <%= form.text_field :address %>
+  </div>
+
+  <div>
+    <%= form.label :city %><br>
+    <%= form.text_field :city %>
+  </div>
+
+  <div>
+    <%= form.label :state %><br>
+    <%= form.text_field :state %>
+  </div>
+
+  <div>
+    <%= form.label :postal_code %><br>
+    <%= form.text_field :postal_code %>
+  </div>
+
+  <div>
+    <%= form.label :phone %><br>
+    <%= form.telephone_field :phone %>
+  </div>
+
+  <div>
+    <%= form.label :email %><br>
+    <%= form.email_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :status %><br>
+    <%= form.select :status, Theatre::STATUSES %>
+  </div>
+
+  <div>
+    <%= form.submit "Update Theatre" %>
+  </div>
+
+<% end %>
+
+<p>
+  <%= link_to "Back to Theatre", theatre_path(@theatre) %>
+</p>

@@ -1,2 +1,36 @@
-<h1>Theatres#index</h1>
-<p>Find me in app/views/theatres/index.html.erb</p>
+<h1>Theatres</h1>
+
+<%= link_to "Create New Theatre", new_theatre_path %>
+
+<hr>
+
+<% if @theatres.any? %>
+  <% @theatres.each do |theatre| %>
+    <div>
+      <h2><%= theatre.name %></h2>
+
+      <p>
+        <strong>City:</strong>
+        <%= theatre.city %>
+      </p>
+
+      <p>
+        <strong>Status:</strong>
+        <%= theatre.status %>
+      </p>
+
+      <%= link_to "View", theatre_path(theatre) %>
+      |
+      <%= link_to "Edit", edit_theatre_path(theatre) %>
+      |
+      <%= button_to "Delete",
+                    theatre_path(theatre),
+                    method: :delete,
+                    data: { turbo_confirm: "Are you sure?" } %>
+    </div>
+
+    <hr>
+  <% end %>
+<% else %>
+  <p>No theatres available.</p>
+<% end %>

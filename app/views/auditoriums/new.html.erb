@@ -1,2 +1,49 @@
-<h1>Auditoriums#new</h1>
-<p>Find me in app/views/auditoriums/new.html.erb</p>
+<h1>New Auditorium</h1>
+
+<p>
+  <strong>Theatre:</strong>
+  <%= @theatre.name %>
+</p>
+
+<%= form_with model: @auditorium,
+              url: theatre_auditoriums_path(@theatre) do |form| %>
+
+  <% if @auditorium.errors.any? %>
+    <div>
+      <h2>
+        <%= pluralize(@auditorium.errors.count, "error") %>
+        prevented this auditorium from being saved:
+      </h2>
+
+      <ul>
+        <% @auditorium.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :screen_type %><br>
+    <%= form.text_field :screen_type %>
+  </div>
+
+  <div>
+    <%= form.label :capacity %><br>
+    <%= form.number_field :capacity, min: 1 %>
+  </div>
+
+  <div>
+    <%= form.submit "Create Auditorium" %>
+  </div>
+
+<% end %>
+
+<p>
+  <%= link_to "Back to Theatre", theatre_path(@theatre) %>
+</p>

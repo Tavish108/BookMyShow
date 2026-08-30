@@ -1,2 +1,69 @@
-<h1>Seats#edit</h1>
-<p>Find me in app/views/seats/edit.html.erb</p>
+<h1>Edit Seat</h1>
+
+<p>
+  <strong>Theatre:</strong>
+  <%= @theatre.name %>
+</p>
+
+<p>
+  <strong>Auditorium:</strong>
+  <%= @auditorium.name %>
+</p>
+
+<%= form_with model: @seat,
+              url: theatre_auditorium_seat_path(
+                @theatre,
+                @auditorium,
+                @seat
+              ),
+              method: :patch do |form| %>
+
+  <% if @seat.errors.any? %>
+    <div>
+      <h2>
+        <%= pluralize(@seat.errors.count, "error") %>
+        prevented this seat from being saved:
+      </h2>
+
+      <ul>
+        <% @seat.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :row_name %><br>
+    <%= form.text_field :row_name %>
+  </div>
+
+  <div>
+    <%= form.label :seat_number %><br>
+    <%= form.number_field :seat_number, min: 1 %>
+  </div>
+
+  <div>
+    <%= form.label :seat_type %><br>
+    <%= form.text_field :seat_type %>
+  </div>
+
+  <div>
+    <%= form.label :seat_category %><br>
+    <%= form.text_field :seat_category %>
+  </div>
+
+  <div>
+    <%= form.submit "Update Seat" %>
+  </div>
+
+<% end %>
+
+<p>
+  <%= link_to "Back to Seat",
+              theatre_auditorium_seat_path(
+                @theatre,
+                @auditorium,
+                @seat
+              ) %>
+</p>

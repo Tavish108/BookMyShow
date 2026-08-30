@@ -1,16 +1,4 @@
 Rails.application.routes.draw do
-  get "seats/index"
-  get "seats/show"
-  get "seats/new"
-  get "seats/edit"
-  get "auditoriums/index"
-  get "auditoriums/show"
-  get "auditoriums/new"
-  get "auditoriums/edit"
-  get "theatres/index"
-  get "theatres/show"
-  get "theatres/new"
-  get "theatres/edit"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :theatres do
     resources :auditoriums do

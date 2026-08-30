@@ -5,6 +5,8 @@ class Seat < ApplicationRecord
   validates :row_name, presence: true
   # validates :seat_number, presence: true, numericality: { greater_than: 0 }
   validates :seat_number,
+                presence: true,
+                numericality: { greater_than: 0 },
               uniqueness: {
                 scope: [ :auditorium_id, :row_name ]
               }

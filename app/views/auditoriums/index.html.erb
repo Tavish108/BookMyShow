@@ -1,2 +1,50 @@
-<h1>Auditoriums#index</h1>
-<p>Find me in app/views/auditoriums/index.html.erb</p>
+<h1>Auditoriums</h1>
+
+<p>
+  <strong>Theatre:</strong>
+  <%= @theatre.name %>
+</p>
+
+<%= link_to "Add Auditorium",
+            new_theatre_auditorium_path(@theatre) %>
+
+<hr>
+
+<% if @auditoriums.any? %>
+  <% @auditoriums.each do |auditorium| %>
+    <div>
+      <h2><%= auditorium.name %></h2>
+
+      <p>
+        <strong>Screen Type:</strong>
+        <%= auditorium.screen_type %>
+      </p>
+
+      <p>
+        <strong>Capacity:</strong>
+        <%= auditorium.capacity %>
+      </p>
+
+      <%= link_to "View",
+                  theatre_auditorium_path(@theatre, auditorium) %>
+
+      |
+
+      <%= link_to "Edit",
+                  edit_theatre_auditorium_path(@theatre, auditorium) %>
+
+      |
+
+      <%= button_to "Delete",
+                    theatre_auditorium_path(@theatre, auditorium),
+                    method: :delete,
+                    data: { turbo_confirm: "Are you sure?" } %>
+    </div>
+
+    <hr>
+  <% end %>
+<% else %>
+  <p>No auditoriums available.</p>
+<% end %>
+
+<%= link_to "Back to Theatre", theatre_path(@theatre) %>
