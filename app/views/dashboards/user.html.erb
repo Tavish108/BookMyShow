@@ -1,11 +1,176 @@
-<h1>User Dashboard</h1>
+<div class="min-h-screen bg-gray-950 text-white">
 
-<p>Welcome, <%= current_user.name %>!</p>
+  <!-- Navbar -->
 
-<p>Movie browsing and booking features will appear here.</p>
+  <nav class="border-b border-gray-800 bg-gray-900">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
-<p>
-  <%= link_to "My Profile", me_path %>
-</p>
+```
+  <%= link_to "BookMyShow", root_path,
+      class: "text-2xl font-bold tracking-tight text-red-500 hover:text-red-400 transition" %>
 
-<%= button_to "Logout", logout_path, method: :delete %>
+  <div class="flex items-center gap-4">
+
+    <span class="hidden text-sm text-gray-400 sm:block">
+      Hi, <span class="font-medium text-white"><%= current_user.name %></span>
+    </span>
+
+    <%= link_to "My Profile", me_path,
+        class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+    <%= button_to "Logout",
+        logout_path,
+        method: :delete,
+        class: "rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700" %>
+
+  </div>
+
+</div>
+```
+
+  </nav>
+
+  <!-- Dashboard -->
+
+  <main class="mx-auto max-w-7xl px-6 py-12">
+
+```
+<!-- Welcome -->
+<div class="mb-10">
+
+  <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
+    User Dashboard
+  </p>
+
+  <h1 class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
+    Welcome, <%= current_user.name %> 👋
+  </h1>
+
+  <p class="mt-3 text-gray-400">
+    Discover movies, explore theatres and book your next experience.
+  </p>
+
+</div>
+
+
+<!-- Quick Actions -->
+<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+  <!-- Browse Movies -->
+  <div class="group rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
+
+    <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/10 text-2xl">
+      🎬
+    </div>
+
+    <h2 class="text-xl font-semibold">
+      Browse Movies
+    </h2>
+
+    <p class="mt-2 text-sm leading-6 text-gray-400">
+      Explore the latest movies, upcoming releases and popular films.
+    </p>
+
+    <button
+      class="mt-6 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700">
+      Browse Movies
+    </button>
+
+  </div>
+
+
+  <!-- Find Shows -->
+  <div class="group rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
+
+    <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/10 text-2xl">
+      🎟️
+    </div>
+
+    <h2 class="text-xl font-semibold">
+      Find Shows
+    </h2>
+
+    <p class="mt-2 text-sm leading-6 text-gray-400">
+      Find available shows and choose the theatre, date and time.
+    </p>
+
+    <button
+      class="mt-6 rounded-lg border border-gray-700 px-4 py-2.5 text-sm font-semibold text-gray-300 transition hover:bg-gray-700 hover:text-white">
+      View Shows
+    </button>
+
+  </div>
+
+
+  <!-- My Bookings -->
+  <div class="group rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
+
+    <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-2xl">
+      🎫
+    </div>
+
+    <h2 class="text-xl font-semibold">
+      My Bookings
+    </h2>
+
+    <p class="mt-2 text-sm leading-6 text-gray-400">
+      View your upcoming and previous movie bookings.
+    </p>
+
+    <button
+      class="mt-6 rounded-lg border border-gray-700 px-4 py-2.5 text-sm font-semibold text-gray-300 transition hover:bg-gray-700 hover:text-white">
+      My Bookings
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- Getting Started -->
+<div class="mt-10 rounded-2xl border border-gray-800 bg-gray-900 p-8">
+
+  <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+
+    <div>
+
+      <h2 class="text-2xl font-bold">
+        Ready for your next movie?
+      </h2>
+
+      <p class="mt-2 max-w-2xl text-gray-400">
+        Browse movies, select a theatre and book your seats in just a few steps.
+      </p>
+
+    </div>
+
+    <div class="flex-shrink-0">
+      <button
+        class="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700">
+        Explore Movies
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Profile -->
+<div class="mt-10">
+
+  <%= link_to me_path,
+      class: "inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition hover:text-white" do %>
+
+    <span>👤</span>
+    Manage My Profile
+    <span>→</span>
+
+  <% end %>
+
+</div>
+```
+
+  </main>
+
+</div>
