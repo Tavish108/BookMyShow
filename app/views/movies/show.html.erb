@@ -1,70 +1,269 @@
-<h1><%= @movie.title %></h1>
+<div class="min-h-screen bg-gray-950 text-white">
 
-<p>
-  <strong>Description:</strong>
-  <%= @movie.description %>
-</p>
+  <!-- Navbar -->
 
-<p>
-  <strong>Genres:</strong>
-  <%= @movie.genres.map(&:name).join(", ") %>
-</p>
+  <nav class="border-b border-gray-800 bg-gray-900">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
-<p>
-  <strong>Duration:</strong>
-  <%= @movie.duration_minutes %> minutes
-</p>
+```
+  <%= link_to "BookMyShow", root_path,
+      class: "text-2xl font-bold tracking-tight text-red-500 transition hover:text-red-400" %>
 
-<p>
-  <strong>Release Date:</strong>
-  <%= @movie.release_date %>
-</p>
+  <div class="flex items-center gap-3">
 
-<p>
-  <strong>Language:</strong>
-  <%= @movie.language.name %>
-</p>
+    <%= link_to "Movies",
+        movies_path,
+        class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
 
-<p>
-  <strong>Certificate:</strong>
-  <%= @movie.certificate %>
-</p>
+    <%= link_to "Dashboard",
+        user_dashboard_path,
+        class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
 
-<p>
-  <strong>Status:</strong>
-  <%= @movie.status %>
-</p>
+    <%= link_to "Profile",
+        me_path,
+        class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
 
-<% if @movie.poster_url.present? %>
-  <p>
-    <strong>Poster:</strong>
-  </p>
+    <%= button_to "Logout",
+        logout_path,
+        method: :delete,
+        class: "rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700" %>
 
-  <%= image_tag @movie.poster_url,
-                alt: @movie.title,
-                width: 250 %>
-<% end %>
+  </div>
 
-<% if @movie.trailer_url.present? %>
-  <p>
-    <%= link_to "Watch Trailer", @movie.trailer_url, target: "_blank" %>
-  </p>
-<% end %>
+</div>
+```
 
-<hr>
+  </nav>
 
+  <!-- Main -->
+
+  <main class="mx-auto max-w-6xl px-6 py-12">
+
+```
+<!-- Movie Hero -->
+<div class="overflow-hidden rounded-3xl border border-gray-800 bg-gray-900">
+
+  <div class="grid lg:grid-cols-[320px_1fr]">
+
+    <!-- Poster -->
+    <div class="bg-gray-800">
+
+      <% if @movie.poster_url.present? %>
+
+        <img
+          src="<%= @movie.poster_url %>"
+          alt="<%= @movie.title %> poster"
+          class="h-full min-h-[450px] w-full object-cover lg:min-h-[520px]">
+
+      <% else %>
+
+        <div class="flex min-h-[450px] items-center justify-center lg:min-h-[520px]">
+
+          <div class="text-center">
+
+            <div class="text-6xl">
+              🎬
+            </div>
+
+            <p class="mt-4 text-sm text-gray-500">
+              No poster available
+            </p>
+
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+
+    <!-- Movie Information -->
+    <div class="p-7 sm:p-10">
+
+      <!-- Status -->
+      <div class="mb-5 flex flex-wrap items-center gap-3">
+
+        <% if @movie.status.to_s.upcase == "PUBLISHED" %>
+
+          <span class="rounded-full border border-green-500/30 bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-400">
+            Published
+          </span>
+
+        <% elsif @movie.status.to_s.upcase == "DRAFT" %>
+
+          <span class="rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3 py-1 text-xs font-semibold text-yellow-400">
+            Draft
+          </span>
+
+        <% else %>
+
+          <span class="rounded-full border border-gray-700 bg-gray-800 px-3 py-1 text-xs font-semibold text-gray-400">
+            <%= @movie.status %>
+          </span>
+
+        <% end %>
+
+        <span class="rounded-md bg-gray-800 px-2.5 py-1 text-xs font-semibold text-gray-300">
+          <%= @movie.certificate %>
+        </span>
+
+      </div>
+
+
+      <!-- Title -->
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+        <%= @movie.title %>
+      </h1>
+
+
+      <!-- Quick Info -->
+      <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-gray-400">
+
+        <span class="flex items-center gap-2">
+          🌐
+          <%= @movie.language.name %>
+        </span>
+
+        <span class="flex items-center gap-2">
+          ⏱️
+          <%= @movie.duration_minutes %> min
+        </span>
+
+        <span class="flex items-center gap-2">
+          📅
+          <%= @movie.release_date %>
+        </span>
+
+      </div>
+
+
+      <!-- Genres -->
+      <div class="mt-6 flex flex-wrap gap-2">
+
+        <% @movie.genres.each do |genre| %>
+
+          <span class="rounded-full bg-gray-800 px-3 py-1.5 text-xs font-medium text-gray-300">
+            <%= genre.name %>
+          </span>
+
+        <% end %>
+
+      </div>
+
+
+      <!-- Description -->
+      <div class="mt-8">
+
+        <h2 class="text-lg font-semibold">
+          About the Movie
+        </h2>
+
+        <p class="mt-3 max-w-3xl text-sm leading-7 text-gray-400">
+          <%= @movie.description %>
+        </p>
+
+      </div>
+
+
+      <!-- Actions -->
+      <div class="mt-8 flex flex-wrap gap-3">
+
+        <% if @movie.trailer_url.present? %>
+
+          <%= link_to @movie.trailer_url,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              class: "inline-flex items-center gap-2 rounded-xl border border-gray-700 px-5 py-3 text-sm font-semibold text-gray-200 transition hover:bg-gray-800 hover:text-white" do %>
+
+            ▶ Watch Trailer
+
+          <% end %>
+
+        <% end %>
+
+        <% if @movie.status.to_s.upcase == "PUBLISHED" %>
+
+          <button
+            class="inline-flex items-center gap-2 rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700">
+
+            🎟️ Book Tickets
+
+          </button>
+
+        <% end %>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Admin Actions -->
 <% if current_user.has_role?("SUPER_ADMIN") ||
       @movie.created_by_id == current_user.id %>
 
-  <%= link_to "Edit Movie", edit_movie_path(@movie) %>
+  <div class="mt-8 rounded-2xl border border-gray-800 bg-gray-900 p-6">
 
-  <%= button_to "Delete Movie",
-                movie_path(@movie),
-                method: :delete,
-                data: { turbo_confirm: "Are you sure?" } %>
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+
+      <div>
+
+        <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
+          Content Management
+        </p>
+
+        <h2 class="mt-1 text-lg font-semibold">
+          Movie Actions
+        </h2>
+
+      </div>
+
+
+      <div class="flex flex-wrap gap-3">
+
+        <%= link_to "Edit Movie",
+            edit_movie_path(@movie),
+            class: "rounded-lg border border-gray-700 px-5 py-2.5 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+
+        <%= button_to "Delete Movie",
+            movie_path(@movie),
+            method: :delete,
+            data: { turbo_confirm: "Are you sure you want to delete this movie?" },
+            class: "rounded-lg border border-red-500/30 bg-red-500/10 px-5 py-2.5 text-sm font-medium text-red-400 transition hover:bg-red-500/20" %>
+
+      </div>
+
+    </div>
+
+  </div>
 
 <% end %>
 
-<br>
 
-<%= link_to "Back to Movies", movies_path %>
+<!-- Navigation -->
+<div class="mt-8 flex flex-wrap items-center gap-5">
+
+  <%= link_to "← Back to Movies",
+      movies_path,
+      class: "text-sm font-medium text-gray-500 transition hover:text-gray-300" %>
+
+  <% if current_user.has_role?("CONTENT_ADMIN") ||
+        current_user.has_role?("SUPER_ADMIN") %>
+
+    <%= link_to "Content Dashboard →",
+        content_admin_dashboard_path,
+        class: "text-sm font-medium text-gray-500 transition hover:text-gray-300" %>
+
+  <% end %>
+
+</div>
+```
+
+  </main>
+
+</div>
