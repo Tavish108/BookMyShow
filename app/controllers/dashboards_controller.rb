@@ -7,6 +7,7 @@ class DashboardsController < ApplicationController
 
   def theatre_admin
     require_role("THEATRE_ADMIN", "SUPER_ADMIN")
+    @theatres = current_user.created_theatres
   end
 
   def content_admin

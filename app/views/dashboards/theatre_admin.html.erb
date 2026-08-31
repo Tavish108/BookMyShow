@@ -1,92 +1,144 @@
 <div class="min-h-screen w-full bg-gray-950 text-white">
-
   <div class="mx-auto max-w-7xl px-6 py-12">
 
-    <!-- Page Header -->
-    <div class="mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+```
+<!-- Page Header -->
+<div class="mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+  <div>
+    <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+      Theatre Management
+    </p>
 
-      <div>
-        <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
-          Theatre Management
-        </p>
+    <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+      Theatre Admin Dashboard
+    </h1>
 
-        <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-          Theatre Admin Dashboard
-        </h1>
+    <p class="mt-3 text-gray-400">
+      Welcome, <%= current_user.name %>!
+    </p>
+  </div>
 
-        <p class="mt-3 text-gray-400">
-          Welcome, <%= current_user.name %>!
-        </p>
-      </div>
+  <%= link_to "My Profile",
+      me_path,
+      class: "inline-flex items-center justify-center rounded-lg border border-gray-700 px-5 py-3 font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+</div>
 
-      <%= link_to "My Profile",
-          me_path,
-          class: "inline-flex items-center justify-center rounded-lg border border-gray-700 px-5 py-3 font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+<!-- Theatre Management -->
+<div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
 
+  <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-bold text-white">
+        My Theatres
+      </h2>
+
+      <p class="mt-1 text-sm text-gray-400">
+        Manage the theatres created by you.
+      </p>
     </div>
 
+    <%= link_to "Add Theatre",
+        new_theatre_path,
+        class: "inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700" %>
+  </div>
 
-    <!-- Theatre Management -->
-    <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+  <% if @theatres.any? %>
 
-      <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
 
-       
+      <% @theatres.each do |theatre| %>
 
-    <!-- Coming Soon / CRUD Placeholder -->
-    <div class="mt-8 rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+        <div class="rounded-xl border border-gray-800 bg-gray-950 p-5">
 
-      <div class="flex flex-col items-center justify-center py-8 text-center">
+          <div class="mb-4">
+            <h3 class="text-xl font-semibold text-white">
+              <%= theatre.name %>
+            </h3>
 
-        <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gray-800 text-2xl">
-          🎭
+            <p class="mt-1 text-sm text-gray-400">
+              <%= theatre.city %>
+              <% if theatre.state.present? %>
+                , <%= theatre.state %>
+              <% end %>
+            </p>
+          </div>
+
+          <div class="mb-5">
+            <span class="rounded-full border border-gray-700 bg-gray-800 px-3 py-1 text-xs font-medium text-gray-300">
+              <%= theatre.status %>
+            </span>
+          </div>
+
+          <div class="flex gap-3">
+            <%= link_to "View",
+                theatre_path(theatre),
+                class: "flex-1 rounded-lg border border-gray-700 px-4 py-2 text-center text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+            <%= link_to "Edit",
+                edit_theatre_path(theatre),
+                class: "flex-1 rounded-lg bg-gray-800 px-4 py-2 text-center text-sm font-medium text-white transition hover:bg-gray-700" %>
+          </div>
+
         </div>
 
-        <h2 class="text-xl font-bold text-white">
-          Theatre CRUD
-        </h2>
-
-        <p class="mt-2 max-w-lg text-sm leading-6 text-gray-400">
-          Theatre creation, editing and management tools will appear here.
-        </p>
-
-        <span class="mt-5 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-400">
-          Coming Soon
-        </span>
-
-      </div>
+      <% end %>
 
     </div>
 
+  <% else %>
 
-    <!-- Account Actions -->
-    <div class="mt-8 flex flex-col gap-4 border-t border-gray-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
+    <div class="rounded-xl border border-dashed border-gray-700 bg-gray-950 px-6 py-12 text-center">
 
-      <div>
-        <p class="text-sm font-medium text-gray-300">
-          Administrator Account
-        </p>
-
-        <p class="mt-1 text-sm text-gray-500">
-          Manage your profile or sign out securely.
-        </p>
+      <div class="mb-4 text-4xl">
+        🎭
       </div>
 
-      <div class="flex flex-col gap-3 sm:flex-row">
+      <h3 class="text-lg font-semibold text-white">
+        No theatres yet
+      </h3>
 
-        <%= link_to "My Profile",
-            me_path,
-            class: "rounded-lg border border-gray-700 px-5 py-3 text-center font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+      <p class="mt-2 text-sm text-gray-400">
+        You haven't created any theatres yet.
+      </p>
 
-        <%= button_to "Logout",
-            logout_path,
-            method: :delete,
-            class: "rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700" %>
-
-      </div>
+      <%= link_to "Create Your First Theatre",
+          new_theatre_path,
+          class: "mt-5 inline-flex rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700" %>
 
     </div>
+
+  <% end %>
+
+</div>
+
+<!-- Account Actions -->
+<div class="mt-8 flex flex-col gap-4 border-t border-gray-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
+
+  <div>
+    <p class="text-sm font-medium text-gray-300">
+      Administrator Account
+    </p>
+
+    <p class="mt-1 text-sm text-gray-500">
+      Manage your profile or sign out securely.
+    </p>
+  </div>
+
+  <div class="flex flex-col gap-3 sm:flex-row">
+
+    <%= link_to "My Profile",
+        me_path,
+        class: "rounded-lg border border-gray-700 px-5 py-3 text-center font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+    <%= button_to "Logout",
+        logout_path,
+        method: :delete,
+        class: "rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700" %>
 
   </div>
 
+</div>
+```
+
+  </div>
 </div>

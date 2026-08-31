@@ -15,7 +15,7 @@
       Hi, <span class="font-medium text-white"><%= current_user.name %></span>
     </span>
 
-    <%= link_to "Dashboard", user_dashboard_path,
+    <%= link_to "Dashboard", dashboard_path_for_current_user,
         class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
 
     <%= button_to "Logout",
@@ -171,7 +171,7 @@
 <!-- Navigation -->
 <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
-  <%= link_to root_path,
+  <%= link_to dashboard_path_for_current_user,
       class: "inline-flex items-center justify-center gap-2 rounded-lg border border-gray-700 px-5 py-2.5 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" do %>
 
     ← Home
@@ -179,7 +179,7 @@
   <% end %>
 
 
-  <%= link_to user_dashboard_path,
+  <%= link_to dashboard_path_for_current_user,
       class: "inline-flex items-center justify-center gap-2 rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700" do %>
 
     Dashboard →

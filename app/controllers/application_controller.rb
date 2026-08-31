@@ -32,17 +32,19 @@ end
     require_role("SUPER_ADMIN")
   end
 
-def redirect_to_dashboard
-  if current_user.has_role?("SUPER_ADMIN")
-    redirect_to super_admin_dashboard_path
-  elsif current_user.has_role?("THEATRE_ADMIN")
-    redirect_to theatre_admin_dashboard_path
-  elsif current_user.has_role?("CONTENT_ADMIN")
-    redirect_to content_admin_dashboard_path
-  else
-    redirect_to user_dashboard_path
+  
+  def dashboard_path_for_current_user
+    if current_user.has_role?("SUPER_ADMIN")
+      super_admin_dashboard_path
+    elsif current_user.has_role?("THEATRE_ADMIN")
+      theatre_admin_dashboard_path
+    elsif current_user.has_role?("CONTENT_ADMIN")
+      content_admin_dashboard_path
+    else
+      user_dashboard_path
+    end
   end
-end
 
+  helper_method :dashboard_path_for_current_user
 
 end
