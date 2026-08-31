@@ -111,6 +111,138 @@
 
     </div>
 
+    ```erb
+    <!-- Generate Seats Section -->
+
+    <div class="mb-10 rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+
+      <div class="mb-6 border-b border-gray-800 pb-5">
+        <div class="flex items-center gap-3">
+
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-red-500/10 text-xl">
+            ⚙️
+          </div>
+
+          <div>
+            <h2 class="text-xl font-semibold text-white">
+              Generate Seats
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-400">
+              Create multiple seats at once for this auditorium.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <%= form_with url: generate_theatre_auditorium_seats_path(
+            @theatre,
+            @auditorium
+          ),
+          method: :post,
+          class: "space-y-6" do |form| %>
+
+        <!-- Row Range -->
+
+        <div class="grid gap-6 sm:grid-cols-3">
+
+          <div>
+            <%= form.label :start_row,
+                "Starting Row",
+                class: "block text-sm font-medium text-gray-300" %>
+
+            <%= form.text_field :start_row,
+                maxlength: 1,
+                placeholder: "A",
+                class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500" %>
+          </div>
+
+          <div>
+            <%= form.label :end_row,
+                "Ending Row",
+                class: "block text-sm font-medium text-gray-300" %>
+
+            <%= form.text_field :end_row,
+                maxlength: 1,
+                placeholder: "F",
+                class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500" %>
+          </div>
+
+          <div>
+            <%= form.label :seats_per_row,
+                "Seats Per Row",
+                class: "block text-sm font-medium text-gray-300" %>
+
+            <%= form.number_field :seats_per_row,
+                min: 1,
+                placeholder: "10",
+                class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500" %>
+          </div>
+
+        </div>
+
+        <!-- Seat Type and Category -->
+
+        <div class="grid gap-6 sm:grid-cols-2">
+
+          <div>
+            <%= form.label :seat_type,
+                "Seat Type",
+                class: "block text-sm font-medium text-gray-300" %>
+
+            <%= form.select :seat_type,
+                ["REGULAR", "RECLINER"],
+                {},
+                class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500" %>
+          </div>
+
+          <div>
+            <%= form.label :seat_category,
+                "Seat Category",
+                class: "block text-sm font-medium text-gray-300" %>
+
+            <%= form.select :seat_category,
+                ["STANDARD", "PREMIUM"],
+                {},
+                class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500" %>
+          </div>
+
+        </div>
+
+        <!-- Example -->
+
+        <div class="rounded-xl border border-gray-800 bg-gray-950 p-4">
+
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Example
+          </p>
+
+          <p class="mt-2 text-sm text-gray-400">
+            A to F with 10 seats per row will generate:
+          </p>
+
+          <p class="mt-2 font-medium text-gray-300">
+            A1-A10, B1-B10, C1-C10, D1-D10, E1-E10, F1-F10
+          </p>
+
+        </div>
+
+        <!-- Generate Button -->
+
+        <div class="flex justify-end border-t border-gray-800 pt-6">
+
+          <%= form.submit "Generate Seats",
+              class: "rounded-lg bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900" %>
+
+        </div>
+
+      <% end %>
+
+    </div>
+```
+
+
 
     <!-- Seats Section -->
     <div>

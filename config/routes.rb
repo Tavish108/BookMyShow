@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :theatres do
     resources :auditoriums do
-      resources :seats
+      resources :seats do
+        collection do
+          post :generate
+        end
+      end
     end
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
