@@ -1,50 +1,167 @@
-<h1>Auditoriums</h1>
+<div class="min-h-screen w-full bg-gray-950 text-white">
+  <div class="mx-auto w-full max-w-7xl px-6 py-12">
 
-<p>
-  <strong>Theatre:</strong>
-  <%= @theatre.name %>
-</p>
+    <!-- Page Header -->
+    <div class="mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
 
-<%= link_to "Add Auditorium",
-            new_theatre_auditorium_path(@theatre) %>
+      <div>
+        <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+          Theatre Administration
+        </p>
 
-<hr>
+        <h1 class="text-4xl font-bold tracking-tight text-white">
+          Auditoriums
+        </h1>
 
-<% if @auditoriums.any? %>
-  <% @auditoriums.each do |auditorium| %>
-    <div>
-      <h2><%= auditorium.name %></h2>
+        <p class="mt-3 text-gray-400">
+          Manage auditoriums available at
+          <span class="font-medium text-gray-300"><%= @theatre.name %></span>.
+        </p>
+      </div>
 
-      <p>
-        <strong>Screen Type:</strong>
-        <%= auditorium.screen_type %>
-      </p>
+      <!-- Add Auditorium -->
+      <div>
+        <%= link_to "Add Auditorium",
+            new_theatre_auditorium_path(@theatre),
+            class: "inline-flex w-full items-center justify-center rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700 sm:w-auto" %>
+      </div>
 
-      <p>
-        <strong>Capacity:</strong>
-        <%= auditorium.capacity %>
-      </p>
-
-      <%= link_to "View",
-                  theatre_auditorium_path(@theatre, auditorium) %>
-
-      |
-
-      <%= link_to "Edit",
-                  edit_theatre_auditorium_path(@theatre, auditorium) %>
-
-      |
-
-      <%= button_to "Delete",
-                    theatre_auditorium_path(@theatre, auditorium),
-                    method: :delete,
-                    data: { turbo_confirm: "Are you sure?" } %>
     </div>
 
-    <hr>
-  <% end %>
-<% else %>
-  <p>No auditoriums available.</p>
-<% end %>
 
-<%= link_to "Back to Theatre", theatre_path(@theatre) %>
+    <% if @auditoriums.any? %>
+
+      <!-- Auditorium Grid -->
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <% @auditoriums.each do |auditorium| %>
+
+          <!-- Auditorium Card -->
+          <div class="flex flex-col rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
+
+            <!-- Card Header -->
+            <div class="mb-5 flex items-start justify-between">
+
+              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/10 text-xl">
+                🎬
+              </div>
+
+              <span class="rounded-full border border-gray-700 bg-gray-950 px-3 py-1 text-xs font-medium text-gray-400">
+                Auditorium
+              </span>
+
+            </div>
+
+
+            <!-- Auditorium Name -->
+            <h2 class="text-xl font-semibold text-white">
+              <%= auditorium.name %>
+            </h2>
+
+
+            <!-- Details -->
+            <div class="mt-5 space-y-4">
+
+              <!-- Screen Type -->
+              <div class="flex items-start gap-3">
+                <span class="text-sm">🎞️</span>
+
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                    Screen Type
+                  </p>
+
+                  <p class="mt-1 text-sm text-gray-300">
+                    <%= auditorium.screen_type %>
+                  </p>
+                </div>
+              </div>
+
+
+              <!-- Capacity -->
+              <div class="flex items-start gap-3">
+                <span class="text-sm">💺</span>
+
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                    Capacity
+                  </p>
+
+                  <p class="mt-1 text-sm text-gray-300">
+                    <%= auditorium.capacity %> seats
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+
+            <!-- Actions -->
+            <div class="mt-6 flex gap-3 border-t border-gray-800 pt-5">
+
+              <%= link_to "View",
+                  theatre_auditorium_path(@theatre, auditorium),
+                  class: "flex-1 rounded-lg border border-gray-700 px-3 py-2.5 text-center text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+              <%= link_to "Edit",
+                  edit_theatre_auditorium_path(@theatre, auditorium),
+                  class: "flex-1 rounded-lg border border-gray-700 px-3 py-2.5 text-center text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+              <%= button_to "Delete",
+                  theatre_auditorium_path(@theatre, auditorium),
+                  method: :delete,
+                  data: { turbo_confirm: "Are you sure?" },
+                  class: "flex-1 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2.5 text-sm font-medium text-red-400 transition hover:bg-red-500/20" %>
+
+            </div>
+
+          </div>
+
+        <% end %>
+
+      </div>
+
+
+    <% else %>
+
+      <!-- Empty State -->
+      <div class="flex min-h-[400px] items-center justify-center rounded-2xl border border-gray-800 bg-gray-900 p-8">
+
+        <div class="max-w-md text-center">
+
+          <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-800 text-2xl">
+            🎬
+          </div>
+
+          <h2 class="text-2xl font-bold text-white">
+            No Auditoriums Available
+          </h2>
+
+          <p class="mt-3 text-gray-400">
+            There are currently no auditoriums for
+            <span class="text-gray-300"><%= @theatre.name %></span>.
+            Add an auditorium to get started.
+          </p>
+
+          <div class="mt-6">
+            <%= link_to "Add Auditorium",
+                new_theatre_auditorium_path(@theatre),
+                class: "inline-flex rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700" %>
+          </div>
+
+        </div>
+
+      </div>
+
+    <% end %>
+
+
+    <!-- Back to Theatre -->
+    <div class="mt-8">
+      <%= link_to "← Back to Theatre",
+          theatre_path(@theatre),
+          class: "text-sm font-medium text-gray-400 transition hover:text-white" %>
+    </div>
+
+  </div>
+</div>

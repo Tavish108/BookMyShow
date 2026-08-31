@@ -1,88 +1,280 @@
-<h1><%= @theatre.name %></h1>
+<div class="min-h-screen w-full bg-gray-950 text-white">
+  <div class="mx-auto w-full max-w-6xl px-6 py-12">
 
-<h2>Theatre Information</h2>
-
-<p>
-  <strong>Address:</strong>
-  <%= @theatre.address %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @theatre.city %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @theatre.state %>
-</p>
-
-<p>
-  <strong>Postal Code:</strong>
-  <%= @theatre.postal_code %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @theatre.phone %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @theatre.email %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @theatre.status %>
-</p>
-
-<hr>
-
-<h2>Auditoriums</h2>
-
-<% if @auditoriums.any? %>
-  <% @auditoriums.each do |auditorium| %>
-    <div>
-      <h3><%= auditorium.name %></h3>
-
-      <p>
-        <strong>Screen Type:</strong>
-        <%= auditorium.screen_type %>
+    <!-- Page Header -->
+    <div class="mb-8">
+      <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+        Theatre Administration
       </p>
 
-      <p>
-        <strong>Capacity:</strong>
-        <%= auditorium.capacity %>
-      </p>
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <%= @theatre.name %>
+          </h1>
 
-      <p>
-        <strong>Seats:</strong>
-        <%= auditorium.seats.count %>
-      </p>
+          <p class="mt-3 text-gray-400">
+            Theatre details, contact information and auditoriums.
+          </p>
+        </div>
 
-      <%= link_to "View Auditorium",
-                  theatre_auditorium_path(@theatre, auditorium) %>
+        <!-- Status -->
+        <span class="w-fit rounded-full border border-green-500/30 bg-green-500/10 px-4 py-1.5 text-sm font-medium text-green-400">
+          <%= @theatre.status %>
+        </span>
+      </div>
     </div>
 
-    <hr>
-  <% end %>
-<% else %>
-  <p>No auditoriums have been added yet.</p>
-<% end %>
 
-<%= link_to "Add Auditorium",
-            new_theatre_auditorium_path(@theatre) %>
+    <!-- Theatre Information -->
+    <div class="mb-10 rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
 
-<br><br>
+      <div class="mb-6 border-b border-gray-800 pb-5">
+        <div class="flex items-center gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-red-500/10 text-xl">
+            🎭
+          </div>
 
-<p>
-  <%= link_to "View All Auditoriums",
-              theatre_auditoriums_path(@theatre) %>
-</p>
+          <div>
+            <h2 class="text-xl font-semibold text-white">
+              Theatre Information
+            </h2>
 
-<%= link_to "Edit Theatre", edit_theatre_path(@theatre) %>
+            <p class="mt-1 text-sm text-gray-400">
+              Location and contact details
+            </p>
+          </div>
+        </div>
+      </div>
 
-<br>
 
-<%= link_to "Back to Theatres", theatres_path %>
+      <!-- Information Grid -->
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <!-- Address -->
+        <div>
+          <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Address
+          </p>
+
+          <p class="text-gray-300">
+            <%= @theatre.address %>
+          </p>
+        </div>
+
+        <!-- City -->
+        <div>
+          <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            City
+          </p>
+
+          <p class="text-gray-300">
+            <%= @theatre.city %>
+          </p>
+        </div>
+
+        <!-- State -->
+        <div>
+          <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            State
+          </p>
+
+          <p class="text-gray-300">
+            <%= @theatre.state %>
+          </p>
+        </div>
+
+        <!-- Postal Code -->
+        <div>
+          <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Postal Code
+          </p>
+
+          <p class="text-gray-300">
+            <%= @theatre.postal_code %>
+          </p>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Phone
+          </p>
+
+          <p class="text-gray-300">
+            <%= @theatre.phone %>
+          </p>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Email
+          </p>
+
+          <p class="break-all text-gray-300">
+            <%= @theatre.email %>
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Theatre Actions -->
+      <div class="mt-8 flex flex-col gap-3 border-t border-gray-800 pt-6 sm:flex-row">
+
+        <%= link_to "Edit Theatre",
+            edit_theatre_path(@theatre),
+            class: "rounded-lg bg-red-600 px-5 py-3 text-center font-semibold text-white transition hover:bg-red-700" %>
+
+        <%= link_to "Back to Theatres",
+            theatres_path,
+            class: "rounded-lg border border-gray-700 px-5 py-3 text-center font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+      </div>
+
+    </div>
+
+
+    <!-- Auditoriums Section -->
+    <div>
+
+      <div class="mb-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+
+        <div>
+          <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+            Infrastructure
+          </p>
+
+          <h2 class="text-2xl font-bold text-white">
+            Auditoriums
+          </h2>
+
+          <p class="mt-2 text-gray-400">
+            Manage the auditoriums available in this theatre.
+          </p>
+        </div>
+
+        <%= link_to "Add Auditorium",
+            new_theatre_auditorium_path(@theatre),
+            class: "rounded-lg bg-red-600 px-5 py-3 text-center font-semibold text-white transition hover:bg-red-700" %>
+
+      </div>
+
+
+      <% if @auditoriums.any? %>
+
+        <!-- Auditorium Cards -->
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+          <% @auditoriums.each do |auditorium| %>
+
+            <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
+
+              <!-- Card Icon -->
+              <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/10 text-xl">
+                🎬
+              </div>
+
+              <!-- Name -->
+              <h3 class="text-xl font-semibold text-white">
+                <%= auditorium.name %>
+              </h3>
+
+
+              <!-- Auditorium Details -->
+              <div class="mt-5 space-y-4">
+
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                    Screen Type
+                  </p>
+
+                  <p class="mt-1 text-sm text-gray-300">
+                    <%= auditorium.screen_type %>
+                  </p>
+                </div>
+
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                    Capacity
+                  </p>
+
+                  <p class="mt-1 text-sm text-gray-300">
+                    <%= auditorium.capacity %> seats
+                  </p>
+                </div>
+
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                    Available Seats
+                  </p>
+
+                  <p class="mt-1 text-sm text-gray-300">
+                    <%= auditorium.seats.count %>
+                  </p>
+                </div>
+
+              </div>
+
+
+              <!-- Auditorium Action -->
+              <div class="mt-6 border-t border-gray-800 pt-5">
+
+                <%= link_to "View Auditorium",
+                    theatre_auditorium_path(@theatre, auditorium),
+                    class: "block w-full rounded-lg border border-gray-700 px-4 py-2.5 text-center text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+              </div>
+
+            </div>
+
+          <% end %>
+
+        </div>
+
+
+        <!-- View All Auditoriums -->
+        <div class="mt-6 text-center">
+
+          <%= link_to "View All Auditoriums",
+              theatre_auditoriums_path(@theatre),
+              class: "text-sm font-medium text-red-500 transition hover:text-red-400" %>
+
+        </div>
+
+
+      <% else %>
+
+        <!-- Empty State -->
+        <div class="rounded-2xl border border-gray-800 bg-gray-900 px-6 py-12 text-center">
+
+          <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-800 text-2xl">
+            🎬
+          </div>
+
+          <h3 class="text-xl font-bold text-white">
+            No Auditoriums Yet
+          </h3>
+
+          <p class="mx-auto mt-3 max-w-md text-gray-400">
+            No auditoriums have been added to this theatre yet.
+            Add an auditorium to start managing its seating and infrastructure.
+          </p>
+
+          <div class="mt-6">
+
+            <%= link_to "Add Auditorium",
+                new_theatre_auditorium_path(@theatre),
+                class: "inline-flex rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700" %>
+
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  </div>
+</div>
