@@ -1,7 +1,9 @@
 class TheatresController < ApplicationController
+  before_action :require_login
   before_action :set_theatre, only: %i[show edit update destroy]
+
   def index
-    @theatres = Theatre.all
+    @theatres = current_user.created_theatres
   end
 
   def show
@@ -13,7 +15,8 @@ class TheatresController < ApplicationController
   end
 
   def create
-    @theatre = Theatre.new(theatre_params)
+    @theatre = current_user.created_theatres.build(theatre_params)
+
     if @theatre.save
       redirect_to @theatre, notice: "Theatre was successfully created."
     else
@@ -38,8 +41,9 @@ class TheatresController < ApplicationController
   end
 
   private
+
   def set_theatre
-    @theatre = Theatre.find(params[:id])
+    @theatre = current_user.created_theatres.find(params[:id])
   end
 
   def theatre_params

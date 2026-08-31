@@ -16,6 +16,10 @@ class User < ApplicationRecord
          foreign_key: :created_by_id,
          dependent: :restrict_with_error
 
+  has_many :created_theatres,
+         class_name: "Theatre",
+         foreign_key: :created_by_id
+
 
 
   def has_role?(role_name)

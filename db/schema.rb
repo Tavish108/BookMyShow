@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_29_180012) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_052031) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -86,6 +86,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_180012) do
     t.string "address"
     t.string "city", null: false
     t.datetime "created_at", null: false
+    t.bigint "created_by_id"
     t.string "email"
     t.string "name", null: false
     t.string "phone"
@@ -94,6 +95,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_180012) do
     t.string "status", null: false
     t.datetime "updated_at", null: false
     t.index ["city"], name: "index_theatres_on_city"
+    t.index ["created_by_id"], name: "index_theatres_on_created_by_id"
     t.index ["status"], name: "index_theatres_on_status"
   end
 
@@ -125,6 +127,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_180012) do
   add_foreign_key "movies", "languages"
   add_foreign_key "movies", "users", column: "created_by_id"
   add_foreign_key "seats", "auditoria"
+  add_foreign_key "theatres", "users", column: "created_by_id"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
 end
