@@ -1,0 +1,214 @@
+<div class="min-h-screen w-full bg-gray-950 text-white">
+  <div class="mx-auto w-full max-w-3xl px-6 py-12">
+
+    <!-- Page Header -->
+    <div class="mb-8">
+      <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+        Theatre Infrastructure
+      </p>
+
+      <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        New Seat
+      </h1>
+
+      <p class="mt-3 text-gray-400">
+        Add a new seat to the auditorium and configure its seating details.
+      </p>
+    </div>
+
+
+    <!-- Parent Context -->
+    <div class="mb-6 grid gap-4 sm:grid-cols-2">
+
+      <!-- Theatre -->
+      <div class="rounded-xl border border-gray-800 bg-gray-900 p-4">
+        <div class="flex items-center gap-3">
+
+          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/10 text-lg">
+            🎭
+          </div>
+
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+              Theatre
+            </p>
+
+            <p class="mt-1 font-medium text-white">
+              <%= @theatre.name %>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Auditorium -->
+      <div class="rounded-xl border border-gray-800 bg-gray-900 p-4">
+        <div class="flex items-center gap-3">
+
+          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/10 text-lg">
+            🎬
+          </div>
+
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+              Auditorium
+            </p>
+
+            <p class="mt-1 font-medium text-white">
+              <%= @auditorium.name %>
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Form Card -->
+    <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+
+      <!-- Validation Errors -->
+      <% if @seat.errors.any? %>
+        <div class="mb-8 rounded-xl border border-red-500/30 bg-red-500/10 p-4">
+
+          <div class="flex items-start gap-3">
+            <span class="text-lg">⚠️</span>
+
+            <div>
+              <h2 class="text-sm font-semibold text-red-400">
+                <%= pluralize(@seat.errors.count, "error") %>
+                prevented this seat from being saved:
+              </h2>
+
+              <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-red-400">
+                <% @seat.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      <% end %>
+
+
+      <!-- Form -->
+      <%= form_with model: @seat,
+                    url: theatre_auditorium_seats_path(
+                      @theatre,
+                      @auditorium
+                    ),
+                    class: "space-y-8" do |form| %>
+
+        <!-- Seat Information -->
+        <div>
+
+          <div class="mb-5 border-b border-gray-800 pb-4">
+            <h2 class="text-xl font-semibold text-white">
+              Seat Information
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-400">
+              Enter the position and classification of this seat.
+            </p>
+          </div>
+
+
+          <div class="grid gap-6 sm:grid-cols-2">
+
+            <!-- Row Name -->
+            <div>
+              <%= form.label :row_name,
+                  class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+              <%= form.text_field :row_name,
+                  placeholder: "e.g. A",
+                  class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" %>
+            </div>
+
+
+            <!-- Seat Number -->
+            <div>
+              <%= form.label :seat_number,
+                  class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+              <%= form.number_field :seat_number,
+                  min: 1,
+                  placeholder: "e.g. 1",
+                  class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" %>
+            </div>
+
+
+            <!-- Seat Type -->
+            <div>
+              <%= form.label :seat_type,
+                  class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+              <%= form.text_field :seat_type,
+                  placeholder: "e.g. Regular",
+                  class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" %>
+            </div>
+
+
+            <!-- Seat Category -->
+            <div>
+              <%= form.label :seat_category,
+                  class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+              <%= form.text_field :seat_category,
+                  placeholder: "e.g. Premium",
+                  class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" %>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Seat Preview -->
+        <div class="rounded-xl border border-gray-800 bg-gray-950 p-5">
+
+          <div class="flex items-center gap-4">
+
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-800 text-xl">
+              💺
+            </div>
+
+            <div>
+              <p class="text-sm font-semibold text-white">
+                Seat Configuration
+              </p>
+
+              <p class="mt-1 text-sm text-gray-500">
+                Row, seat number, type and category will identify this seat.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Actions -->
+        <div class="flex flex-col-reverse gap-3 border-t border-gray-800 pt-6 sm:flex-row sm:justify-end">
+
+          <%= link_to "Back to Auditorium",
+              theatre_auditorium_path(
+                @theatre,
+                @auditorium
+              ),
+              class: "rounded-lg border border-gray-700 px-5 py-3 text-center font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+          <%= form.submit "Create Seat",
+              class: "cursor-pointer rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500/40" %>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  </div>
+</div>

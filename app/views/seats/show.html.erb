@@ -1,0 +1,196 @@
+<div class="min-h-screen w-full bg-gray-950 text-white">
+  <div class="mx-auto w-full max-w-3xl px-6 py-12">
+
+    <!-- Page Header -->
+    <div class="mb-8">
+      <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+        Theatre Infrastructure
+      </p>
+
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            Seat <%= @seat.row_name %><%= @seat.seat_number %>
+          </h1>
+
+          <p class="mt-3 text-gray-400">
+            View the configuration and location of this seat.
+          </p>
+        </div>
+
+        <!-- Seat Icon -->
+        <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-900 text-2xl">
+          💺
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Seat Information Card -->
+    <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+
+      <!-- Card Header -->
+      <div class="mb-6 border-b border-gray-800 pb-5">
+
+        <div class="flex items-center gap-3">
+
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-red-500/10 text-xl">
+            💺
+          </div>
+
+          <div>
+            <h2 class="text-xl font-semibold text-white">
+              Seat Information
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-400">
+              Seat location and classification
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Parent Information -->
+      <div class="mb-8 grid gap-4 sm:grid-cols-2">
+
+        <!-- Theatre -->
+        <div class="rounded-xl border border-gray-800 bg-gray-950 p-4">
+
+          <div class="flex items-center gap-3">
+
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-800 text-lg">
+              🎭
+            </div>
+
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                Theatre
+              </p>
+
+              <p class="mt-1 font-medium text-white">
+                <%= @theatre.name %>
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Auditorium -->
+        <div class="rounded-xl border border-gray-800 bg-gray-950 p-4">
+
+          <div class="flex items-center gap-3">
+
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-800 text-lg">
+              🎬
+            </div>
+
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                Auditorium
+              </p>
+
+              <p class="mt-1 font-medium text-white">
+                <%= @auditorium.name %>
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Seat Details -->
+      <div class="grid gap-6 sm:grid-cols-2">
+
+        <!-- Row -->
+        <div class="rounded-xl border border-gray-800 bg-gray-950 p-5">
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Row
+          </p>
+
+          <p class="mt-2 text-xl font-bold text-white">
+            <%= @seat.row_name %>
+          </p>
+        </div>
+
+
+        <!-- Seat Number -->
+        <div class="rounded-xl border border-gray-800 bg-gray-950 p-5">
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Seat Number
+          </p>
+
+          <p class="mt-2 text-xl font-bold text-white">
+            <%= @seat.seat_number %>
+          </p>
+        </div>
+
+
+        <!-- Seat Type -->
+        <div class="rounded-xl border border-gray-800 bg-gray-950 p-5">
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Seat Type
+          </p>
+
+          <p class="mt-2">
+            <span class="inline-flex rounded-full border border-gray-700 bg-gray-900 px-3 py-1 text-sm font-medium text-gray-300">
+              <%= @seat.seat_type %>
+            </span>
+          </p>
+        </div>
+
+
+        <!-- Seat Category -->
+        <div class="rounded-xl border border-gray-800 bg-gray-950 p-5">
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Seat Category
+          </p>
+
+          <p class="mt-2">
+            <span class="inline-flex rounded-full border border-gray-700 bg-gray-900 px-3 py-1 text-sm font-medium text-gray-300">
+              <%= @seat.seat_category %>
+            </span>
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Actions -->
+      <div class="mt-8 flex flex-col gap-3 border-t border-gray-800 pt-6 sm:flex-row">
+
+        <%= link_to "Edit Seat",
+            edit_theatre_auditorium_seat_path(
+              @theatre,
+              @auditorium,
+              @seat
+            ),
+            class: "rounded-lg bg-red-600 px-5 py-3 text-center font-semibold text-white transition hover:bg-red-700" %>
+
+        <%= link_to "Back to Seats",
+            theatre_auditorium_seats_path(
+              @theatre,
+              @auditorium
+            ),
+            class: "rounded-lg border border-gray-700 px-5 py-3 text-center font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+        <%= link_to "Back to Auditorium",
+            theatre_auditorium_path(
+              @theatre,
+              @auditorium
+            ),
+            class: "rounded-lg border border-gray-700 px-5 py-3 text-center font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
