@@ -1,0 +1,127 @@
+<div class="min-h-screen w-full bg-gray-950 text-white">
+  <div class="mx-auto max-w-4xl px-6 py-12">
+
+    <!-- Header -->
+    <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <div>
+        <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+          Show Management
+        </p>
+
+        <h1 class="text-4xl font-bold tracking-tight">
+          <%= @show.movie.title %>
+        </h1>
+
+        <p class="mt-2 text-gray-400">
+          Show Details
+        </p>
+      </div>
+
+      <span class="inline-flex w-fit rounded-full border border-gray-700 bg-gray-800 px-4 py-2 text-sm font-medium text-gray-300">
+        <%= @show.status %>
+      </span>
+    </div>
+
+    <!-- Show Information -->
+    <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+
+      <div class="grid gap-6 sm:grid-cols-2">
+
+        <!-- Movie -->
+        <div>
+          <p class="text-sm text-gray-500">
+            Movie
+          </p>
+
+          <p class="mt-1 text-lg font-semibold text-white">
+            <%= @show.movie.title %>
+          </p>
+        </div>
+
+        <!-- Theatre -->
+        <div>
+          <p class="text-sm text-gray-500">
+            Theatre
+          </p>
+
+          <p class="mt-1 text-lg font-semibold text-white">
+            <%= @show.theatre.name %>
+          </p>
+
+          <p class="mt-1 text-sm text-gray-400">
+            <%= @show.theatre.city %>
+            <% if @show.theatre.state.present? %>
+              , <%= @show.theatre.state %>
+            <% end %>
+          </p>
+        </div>
+
+        <!-- Auditorium -->
+        <div>
+          <p class="text-sm text-gray-500">
+            Auditorium
+          </p>
+
+          <p class="mt-1 text-lg font-semibold text-white">
+            <%= @show.auditorium.name %>
+          </p>
+        </div>
+
+        <!-- Date -->
+        <div>
+          <p class="text-sm text-gray-500">
+            Date
+          </p>
+
+          <p class="mt-1 text-lg font-semibold text-white">
+            <%= @show.show_date.strftime("%d %B %Y") %>
+          </p>
+        </div>
+
+        <!-- Time -->
+        <div>
+          <p class="text-sm text-gray-500">
+            Time
+          </p>
+
+          <p class="mt-1 text-lg font-semibold text-white">
+            <%= @show.start_time.strftime("%I:%M %p") %>
+            -
+            <%= @show.end_time.strftime("%I:%M %p") %>
+          </p>
+        </div>
+
+        <!-- Price -->
+        <div>
+          <p class="text-sm text-gray-500">
+            Ticket Price
+          </p>
+
+          <p class="mt-1 text-lg font-semibold text-white">
+            ₹<%= number_with_precision(@show.price, precision: 2) %>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="mt-8 flex flex-col gap-3 border-t border-gray-800 pt-6 sm:flex-row">
+
+        <%= link_to "Edit Show",
+            edit_show_path(@show),
+            class: "inline-flex items-center justify-center rounded-lg bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700" %>
+
+        <%= link_to "All Shows",
+            shows_path,
+            class: "inline-flex items-center justify-center rounded-lg border border-gray-700 px-6 py-3 font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+        <%= link_to "Dashboard",
+            theatre_admin_dashboard_path,
+            class: "inline-flex items-center justify-center rounded-lg border border-gray-700 px-6 py-3 font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

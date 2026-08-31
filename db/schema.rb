@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_052031) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_073334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -82,6 +82,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_052031) do
     t.index ["auditorium_id"], name: "index_seats_on_auditorium_id"
   end
 
+  create_table "shows", force: :cascade do |t|
+    t.bigint "auditorium_id", null: false
+    t.datetime "created_at", null: false
+    t.time "end_time", null: false
+    t.bigint "movie_id", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.date "show_date", null: false
+    t.time "start_time", null: false
+    t.string "status", null: false
+    t.bigint "theatre_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auditorium_id"], name: "index_shows_on_auditorium_id"
+    t.index ["movie_id"], name: "index_shows_on_movie_id"
+    t.index ["theatre_id"], name: "index_shows_on_theatre_id"
+  end
+
   create_table "theatres", force: :cascade do |t|
     t.string "address"
     t.string "city", null: false
@@ -127,6 +143,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_052031) do
   add_foreign_key "movies", "languages"
   add_foreign_key "movies", "users", column: "created_by_id"
   add_foreign_key "seats", "auditoria"
+  add_foreign_key "shows", "auditoria"
+  add_foreign_key "shows", "movies"
+  add_foreign_key "shows", "theatres"
   add_foreign_key "theatres", "users", column: "created_by_id"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"

@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
-resources :movies
+  resources :movies
+  resources :shows
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  
+
   get "/register", to: "users#new"
   post "/register", to: "users#create"
 
@@ -37,7 +38,7 @@ get "/dashboard/super-admin",
 
 
 namespace :admin do
-  resources :users, only: [:index, :edit, :update]
+  resources :users, only: [ :index, :edit, :update ]
 end
 
 
@@ -52,5 +53,4 @@ end
       end
     end
   end
-
 end
