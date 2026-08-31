@@ -36,6 +36,11 @@ get "/dashboard/super-admin",
     as: :super_admin_dashboard
 
 
+namespace :admin do
+  resources :users, only: [:index, :edit, :update]
+end
+
+
   root "home#index"
 
     resources :theatres do
