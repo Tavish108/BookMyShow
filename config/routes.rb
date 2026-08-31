@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "tailwind_demo/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :theatres do
     resources :auditoriums do
