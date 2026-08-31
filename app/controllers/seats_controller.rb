@@ -28,6 +28,59 @@ class SeatsController < ApplicationController
     end
   end
 
+  def generate
+    start_row = params[:start_row].to_s.upcase
+    end_row = params[:end_row].to_s.upcase
+    seats_per_row = params[:seats_per_row].to_i
+    seat_type = params[:seat_type]
+    seat_category = params[:seat_category]
+
+    if start_row.blank? || end_row.blank? || seats_per_row <= 0
+      redirect_to theatre_auditorium_path(@theatre, @auditorium),
+                alert: "Please provide valid seat generation details."
+      return
+    end
+
+    start_code = start_row.ord
+    end_code = end_row.ord
+
+    if start_code > end_code
+      redirect_to theatre_auditorium_path(@theatre, @auditorium),
+                alert: "End row must come after start row."
+      return
+    end
+
+    rows = (start_code..end_code).map(&:chr)
+
+    requested_seats = rows.length * seats_per_row
+    existing_seats = @auditorium.seats.count
+
+    if existing_seats + requested_seats > @auditorium.capacity
+      remaining = @auditorium.capacity - existing_seats
+
+      redirect_to theatre_auditorium_path(@theatre, @auditorium),
+                alert: "Only #{remaining} seats can be added."
+      return
+    end
+
+    rows.each do |row|
+      (1..seats_per_row).each do |number|
+        @auditorium.seats.create!(
+          row_name: row,
+          seat_number: number,
+          seat_type: seat_type,
+          seat_category: seat_category
+        )
+      end
+    end
+
+  redirect_to theatre_auditorium_path(@theatre, @auditorium),
+              notice: "#{requested_seats} seats were successfully generated."
+  rescue ActiveRecord::RecordNotUnique
+    redirect_to theatre_auditorium_path(@theatre, @auditorium),
+                alert: "Some seats already exist."
+  
+  end
   def edit
   end
 

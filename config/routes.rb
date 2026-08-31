@@ -45,7 +45,11 @@ end
 
     resources :theatres do
     resources :auditoriums do
-      resources :seats
+      resources :seats do
+        collection do
+          post :generate
+        end
+      end
     end
   end
 
