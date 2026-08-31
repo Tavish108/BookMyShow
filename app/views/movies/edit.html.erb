@@ -1,0 +1,374 @@
+<div class="min-h-screen bg-gray-950 text-white">
+
+  <!-- Navbar -->
+
+  <nav class="border-b border-gray-800 bg-gray-900">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+
+```
+  <%= link_to "BookMyShow", root_path,
+      class: "text-2xl font-bold tracking-tight text-red-500 transition hover:text-red-400" %>
+
+  <div class="flex items-center gap-4">
+
+    <span class="hidden text-sm text-gray-400 sm:block">
+      Content Admin:
+      <span class="font-medium text-white">
+        <%= current_user.name %>
+      </span>
+    </span>
+
+    <%= link_to "Dashboard",
+        content_admin_dashboard_path,
+        class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+    <%= link_to "Profile",
+        me_path,
+        class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+    <%= button_to "Logout",
+        logout_path,
+        method: :delete,
+        class: "rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700" %>
+
+  </div>
+
+</div>
+```
+
+  </nav>
+
+  <!-- Main -->
+
+  <main class="mx-auto max-w-4xl px-6 py-12">
+
+```
+<!-- Header -->
+<div class="mb-8">
+
+  <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
+    Content Management
+  </p>
+
+  <h1 class="mt-2 text-4xl font-bold tracking-tight">
+    Edit Movie
+  </h1>
+
+  <p class="mt-3 text-gray-400">
+    Update the details and publishing status of
+    <span class="font-medium text-gray-300">
+      <%= @movie.title %>
+    </span>.
+  </p>
+
+</div>
+
+
+<!-- Form Card -->
+<div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 shadow-xl sm:p-8">
+
+  <!-- Errors -->
+  <% if @movie.errors.any? %>
+
+    <div class="mb-8 rounded-xl border border-red-500/30 bg-red-500/10 p-5">
+
+      <div class="flex items-start gap-3">
+
+        <div class="mt-0.5 text-lg">
+          ⚠️
+        </div>
+
+        <div>
+
+          <h2 class="font-semibold text-red-400">
+            <%= pluralize(@movie.errors.count, "error") %>
+            prevented this movie from being updated:
+          </h2>
+
+          <ul class="mt-3 list-disc space-y-1 pl-5 text-sm text-red-300">
+
+            <% @movie.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  <% end %>
+
+
+  <%= form_with model: @movie, local: true, class: "space-y-8" do |form| %>
+
+
+    <!-- Basic Information -->
+    <div>
+
+      <div class="mb-5 border-b border-gray-800 pb-4">
+
+        <h2 class="text-xl font-semibold">
+          Basic Information
+        </h2>
+
+        <p class="mt-1 text-sm text-gray-500">
+          Update the basic details of the movie.
+        </p>
+
+      </div>
+
+
+      <div class="space-y-6">
+
+        <!-- Title -->
+        <div>
+
+          <%= form.label :title,
+              "Movie Title",
+              class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+          <%= form.text_field :title,
+              placeholder: "Enter movie title",
+              class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" %>
+
+        </div>
+
+
+        <!-- Description -->
+        <div>
+
+          <%= form.label :description,
+              "Description",
+              class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+          <%= form.text_area :description,
+              rows: 5,
+              placeholder: "Write a short description of the movie...",
+              class: "w-full resize-y rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" %>
+
+        </div>
+
+
+        <!-- Duration + Release Date -->
+        <div class="grid gap-6 sm:grid-cols-2">
+
+          <div>
+
+            <%= form.label :duration_minutes,
+                "Duration (minutes)",
+                class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+            <%= form.number_field :duration_minutes,
+                min: 1,
+                placeholder: "e.g. 150",
+                class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" %>
+
+          </div>
+
+
+          <div>
+
+            <%= form.label :release_date,
+                "Release Date",
+                class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+            <%= form.date_field :release_date,
+                class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" %>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Classification -->
+    <div>
+
+      <div class="mb-5 border-b border-gray-800 pb-4">
+
+        <h2 class="text-xl font-semibold">
+          Classification
+        </h2>
+
+        <p class="mt-1 text-sm text-gray-500">
+          Update the language, genres and audience certificate.
+        </p>
+
+      </div>
+
+
+      <div class="space-y-6">
+
+        <!-- Language -->
+        <div>
+
+          <%= form.label :language_id,
+              "Language",
+              class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+          <%= form.collection_select :language_id,
+              @languages,
+              :id,
+              :name,
+              { prompt: "Select language" },
+              { class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" } %>
+
+        </div>
+
+
+        <!-- Genres -->
+        <div>
+
+          <%= form.label :genre_ids,
+              "Genres",
+              class: "mb-3 block text-sm font-medium text-gray-300" %>
+
+          <div class="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+
+            <% @genres.each do |genre| %>
+
+              <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-800 bg-gray-950 px-4 py-3 transition hover:border-gray-700 hover:bg-gray-800">
+
+                <%= check_box_tag "movie[genre_ids][]",
+                    genre.id,
+                    @movie.genre_ids.include?(genre.id),
+                    id: "movie_genre_ids_#{genre.id}",
+                    class: "h-4 w-4 rounded border-gray-600 bg-gray-900 text-red-600 focus:ring-red-500" %>
+
+                <span class="text-sm text-gray-300">
+                  <%= genre.name %>
+                </span>
+
+              </label>
+
+            <% end %>
+
+          </div>
+
+        </div>
+
+
+        <!-- Certificate -->
+        <div>
+
+          <%= form.label :certificate,
+              "Certificate",
+              class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+          <%= form.select :certificate,
+              ["U", "U/A", "A"],
+              { prompt: "Select certificate" },
+              { class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" } %>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Publishing -->
+    <div>
+
+      <div class="mb-5 border-b border-gray-800 pb-4">
+
+        <h2 class="text-xl font-semibold">
+          Publishing
+        </h2>
+
+        <p class="mt-1 text-sm text-gray-500">
+          Manage the movie's publishing status and media.
+        </p>
+
+      </div>
+
+
+      <div class="space-y-6">
+
+        <!-- Status -->
+        <div>
+
+          <%= form.label :status,
+              "Status",
+              class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+          <%= form.select :status,
+              ["DRAFT", "PUBLISHED", "ARCHIVED"],
+              {},
+              { class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" } %>
+
+          <p class="mt-2 text-xs text-gray-500">
+            Draft keeps the movie unpublished. Published makes it available to users.
+          </p>
+
+        </div>
+
+
+        <!-- Poster -->
+        <div>
+
+          <%= form.label :poster_url,
+              "Poster URL",
+              class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+          <%= form.url_field :poster_url,
+              placeholder: "https://example.com/poster.jpg",
+              class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" %>
+
+        </div>
+
+
+        <!-- Trailer -->
+        <div>
+
+          <%= form.label :trailer_url,
+              "Trailer URL",
+              class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+          <%= form.url_field :trailer_url,
+              placeholder: "https://youtube.com/...",
+              class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20" %>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Actions -->
+    <div class="flex flex-col-reverse gap-3 border-t border-gray-800 pt-6 sm:flex-row sm:justify-end">
+
+      <%= link_to "Cancel",
+          movie_path(@movie),
+          class: "inline-flex items-center justify-center rounded-lg border border-gray-700 px-6 py-3 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+      <%= form.submit "Update Movie",
+          class: "inline-flex cursor-pointer items-center justify-center rounded-lg bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900" %>
+
+    </div>
+
+  <% end %>
+
+</div>
+
+
+<!-- Back -->
+<div class="mt-8">
+
+  <%= link_to "← Back to Movie",
+      movie_path(@movie),
+      class: "text-sm font-medium text-gray-500 transition hover:text-gray-300" %>
+
+</div>
+```
+
+  </main>
+
+</div>

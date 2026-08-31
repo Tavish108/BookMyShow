@@ -1,0 +1,174 @@
+<div class="min-h-screen w-full bg-gray-950 text-white">
+
+  <div class="mx-auto max-w-7xl px-6 py-12">
+
+    <!-- Page Header -->
+    <div class="mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+
+      <div>
+        <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+          Administration
+        </p>
+
+        <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          Super Admin Dashboard
+        </h1>
+
+        <p class="mt-3 text-gray-400">
+          Welcome, <%= current_user.name %>! Manage the BookMyShow platform.
+        </p>
+      </div>
+
+      <div>
+        <%= link_to "My Profile",
+            me_path,
+            class: "inline-flex items-center rounded-lg border border-gray-700 px-5 py-3 font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+      </div>
+
+    </div>
+
+
+    <!-- Administration Section -->
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold text-white">
+        Administration
+      </h2>
+
+      <p class="mt-2 text-gray-400">
+        Manage users, roles, theatres and movie content.
+      </p>
+    </div>
+
+
+    <!-- Admin Cards -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+      <!-- User Management -->
+      <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
+        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/10 text-xl">
+          👤
+        </div>
+
+        <h3 class="text-lg font-semibold text-white">
+          User Management
+        </h3>
+
+        <p class="mt-2 text-sm leading-6 text-gray-400">
+          Manage registered users and their account access.
+        </p>
+
+        <div class="mt-6">
+          <span class="text-sm font-medium text-red-500">
+            Manage Users →
+          </span>
+        </div>
+      </div>
+
+
+      <!-- Role Management -->
+      <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
+        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/10 text-xl">
+          ⚙️
+        </div>
+
+        <h3 class="text-lg font-semibold text-white">
+          Role Management
+        </h3>
+
+        <p class="mt-2 text-sm leading-6 text-gray-400">
+          Configure roles and control administrative permissions.
+        </p>
+
+        <div class="mt-6">
+          <span class="text-sm font-medium text-red-500">
+            Manage Roles →
+          </span>
+        </div>
+      </div>
+
+
+      <!-- Theatre Administration -->
+      <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
+        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-xl">
+          🎭
+        </div>
+
+        <h3 class="text-lg font-semibold text-white">
+          Theatre Administration
+        </h3>
+
+        <p class="mt-2 text-sm leading-6 text-gray-400">
+          Manage theatres, auditoriums and seating infrastructure.
+        </p>
+
+        <div class="mt-6">
+          <span class="text-sm font-medium text-red-500">
+            Manage Theatres →
+          </span>
+        </div>
+      </div>
+
+
+      <!-- Content Administration -->
+      <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
+        <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-500/10 text-xl">
+          🎬
+        </div>
+
+        <h3 class="text-lg font-semibold text-white">
+          Content Administration
+        </h3>
+
+        <p class="mt-2 text-sm leading-6 text-gray-400">
+          Manage movies, genres, languages and platform content.
+        </p>
+
+        <div class="mt-6">
+          <span class="text-sm font-medium text-red-500">
+            Manage Content →
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Quick Actions -->
+    <div class="mt-10 rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
+            Account
+          </p>
+
+          <h2 class="mt-2 text-xl font-bold text-white">
+            Manage your administrator account
+          </h2>
+
+          <p class="mt-2 text-sm text-gray-400">
+            View your profile or securely sign out of the administration panel.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row">
+
+          <%= link_to "My Profile",
+              me_path,
+              class: "rounded-lg border border-gray-700 px-5 py-3 text-center font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+          <%= button_to "Logout",
+              logout_path,
+              method: :delete,
+              class: "rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700" %>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

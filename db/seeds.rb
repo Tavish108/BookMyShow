@@ -7,3 +7,30 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+
+
+Role.find_or_create_by!(name: "USER")
+Role.find_or_create_by!(name: "THEATRE_ADMIN")
+Role.find_or_create_by!(name: "CONTENT_ADMIN")
+Role.find_or_create_by!(name: "SUPER_ADMIN")
+
+
+
+genres = [
+  "Action",
+  "Adventure",
+  "Animation",
+  "Comedy",
+  "Crime",
+  "Drama",
+  "Fantasy",
+  "Horror",
+  "Romance",
+  "Sci-Fi",
+  "Thriller"
+]
+
+genres.each do |genre_name|
+  Genre.find_or_create_by!(name: genre_name)
+end
