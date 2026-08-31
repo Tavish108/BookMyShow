@@ -1,0 +1,397 @@
+<div class="min-h-screen w-full bg-gray-950 text-white">
+  <div class="mx-auto w-full max-w-6xl px-6 py-12">
+
+    <!-- Page Header -->
+    <div class="mb-8">
+      <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+        Theatre Infrastructure
+      </p>
+
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <%= @auditorium.name %>
+          </h1>
+
+          <p class="mt-3 text-gray-400">
+            Auditorium details and seating information.
+          </p>
+        </div>
+
+        <!-- Theatre -->
+        <div class="flex w-fit items-center gap-2 rounded-xl border border-gray-800 bg-gray-900 px-4 py-3">
+          <span class="text-lg">🎭</span>
+
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+              Theatre
+            </p>
+
+            <p class="text-sm font-medium text-gray-300">
+              <%= @theatre.name %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Auditorium Information -->
+    <div class="mb-10 rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+
+      <div class="mb-6 border-b border-gray-800 pb-5">
+        <div class="flex items-center gap-3">
+
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-red-500/10 text-xl">
+            🎬
+          </div>
+
+          <div>
+            <h2 class="text-xl font-semibold text-white">
+              Auditorium Information
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-400">
+              Details and seating capacity
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Information -->
+      <div class="grid gap-6 sm:grid-cols-3">
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Theatre
+          </p>
+
+          <p class="mt-2 text-gray-300">
+            <%= @theatre.name %>
+          </p>
+        </div>
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Screen Type
+          </p>
+
+          <p class="mt-2 text-gray-300">
+            <%= @auditorium.screen_type %>
+          </p>
+        </div>
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Capacity
+          </p>
+
+          <p class="mt-2 text-gray-300">
+            <%= @auditorium.capacity %> seats
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Auditorium Actions -->
+      <div class="mt-8 flex flex-col gap-3 border-t border-gray-800 pt-6 sm:flex-row">
+
+        <%= link_to "Edit Auditorium",
+            edit_theatre_auditorium_path(@theatre, @auditorium),
+            class: "rounded-lg bg-red-600 px-5 py-3 text-center font-semibold text-white transition hover:bg-red-700" %>
+
+        <%= link_to "Back to Theatre",
+            theatre_path(@theatre),
+            class: "rounded-lg border border-gray-700 px-5 py-3 text-center font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+      </div>
+
+    </div>
+
+    ```erb
+    <!-- Generate Seats Section -->
+
+    <div class="mb-10 rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+
+      <div class="mb-6 border-b border-gray-800 pb-5">
+        <div class="flex items-center gap-3">
+
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-red-500/10 text-xl">
+            ⚙️
+          </div>
+
+          <div>
+            <h2 class="text-xl font-semibold text-white">
+              Generate Seats
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-400">
+              Create multiple seats at once for this auditorium.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <%= form_with url: generate_theatre_auditorium_seats_path(
+            @theatre,
+            @auditorium
+          ),
+          method: :post,
+          class: "space-y-6" do |form| %>
+
+        <!-- Row Range -->
+
+        <div class="grid gap-6 sm:grid-cols-3">
+
+          <div>
+            <%= form.label :start_row,
+                "Starting Row",
+                class: "block text-sm font-medium text-gray-300" %>
+
+            <%= form.text_field :start_row,
+                maxlength: 1,
+                placeholder: "A",
+                class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500" %>
+          </div>
+
+          <div>
+            <%= form.label :end_row,
+                "Ending Row",
+                class: "block text-sm font-medium text-gray-300" %>
+
+            <%= form.text_field :end_row,
+                maxlength: 1,
+                placeholder: "F",
+                class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500" %>
+          </div>
+
+          <div>
+            <%= form.label :seats_per_row,
+                "Seats Per Row",
+                class: "block text-sm font-medium text-gray-300" %>
+
+            <%= form.number_field :seats_per_row,
+                min: 1,
+                placeholder: "10",
+                class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500" %>
+          </div>
+
+        </div>
+
+        <!-- Seat Type and Category -->
+
+        <div class="grid gap-6 sm:grid-cols-2">
+
+          <div>
+            <%= form.label :seat_type,
+                "Seat Type",
+                class: "block text-sm font-medium text-gray-300" %>
+
+            <%= form.select :seat_type,
+                ["REGULAR", "RECLINER"],
+                {},
+                class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500" %>
+          </div>
+
+          <div>
+            <%= form.label :seat_category,
+                "Seat Category",
+                class: "block text-sm font-medium text-gray-300" %>
+
+            <%= form.select :seat_category,
+                ["STANDARD", "PREMIUM"],
+                {},
+                class: "mt-2 block w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500" %>
+          </div>
+
+        </div>
+
+        <!-- Example -->
+
+        <div class="rounded-xl border border-gray-800 bg-gray-950 p-4">
+
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            Example
+          </p>
+
+          <p class="mt-2 text-sm text-gray-400">
+            A to F with 10 seats per row will generate:
+          </p>
+
+          <p class="mt-2 font-medium text-gray-300">
+            A1-A10, B1-B10, C1-C10, D1-D10, E1-E10, F1-F10
+          </p>
+
+        </div>
+
+        <!-- Generate Button -->
+
+        <div class="flex justify-end border-t border-gray-800 pt-6">
+
+          <%= form.submit "Generate Seats",
+              class: "rounded-lg bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-900" %>
+
+        </div>
+
+      <% end %>
+
+    </div>
+```
+
+
+
+    <!-- Seats Section -->
+    <div>
+
+      <div class="mb-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+
+        <div>
+          <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+            Seating
+          </p>
+
+          <h2 class="text-2xl font-bold text-white">
+            Seats
+          </h2>
+
+          <p class="mt-2 text-gray-400">
+            Manage the seats available in this auditorium.
+          </p>
+        </div>
+
+        <%= link_to "Add Seat",
+            new_theatre_auditorium_seat_path(@theatre, @auditorium),
+            class: "rounded-lg bg-red-600 px-5 py-3 text-center font-semibold text-white transition hover:bg-red-700" %>
+
+      </div>
+
+
+      <% if @seats.any? %>
+
+        <!-- Seat Grid -->
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+          <% @seats.each do |seat| %>
+
+            <div class="rounded-xl border border-gray-800 bg-gray-900 p-5 transition hover:border-gray-700 hover:bg-gray-800">
+
+              <!-- Seat Number -->
+              <div class="flex items-start justify-between gap-3">
+
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                    Seat
+                  </p>
+
+                  <h3 class="mt-1 text-xl font-bold text-white">
+                    <%= seat.row_name %><%= seat.seat_number %>
+                  </h3>
+                </div>
+
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-800">
+                  💺
+                </div>
+
+              </div>
+
+
+              <!-- Seat Details -->
+              <div class="mt-5 space-y-3">
+
+                <div>
+                  <p class="text-xs text-gray-500">
+                    Seat Type
+                  </p>
+
+                  <p class="mt-1 text-sm text-gray-300">
+                    <%= seat.seat_type %>
+                  </p>
+                </div>
+
+                <div>
+                  <p class="text-xs text-gray-500">
+                    Category
+                  </p>
+
+                  <p class="mt-1 text-sm text-gray-300">
+                    <%= seat.seat_category %>
+                  </p>
+                </div>
+
+              </div>
+
+
+              <!-- Seat Action -->
+              <div class="mt-5 border-t border-gray-800 pt-4">
+
+                <%= link_to "View Seat",
+                    theatre_auditorium_seat_path(
+                      @theatre,
+                      @auditorium,
+                      seat
+                    ),
+                    class: "block w-full rounded-lg border border-gray-700 px-4 py-2.5 text-center text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+              </div>
+
+            </div>
+
+          <% end %>
+
+        </div>
+
+
+        <!-- View All Seats -->
+        <div class="mt-6 text-center">
+
+          <%= link_to "View All Seats",
+              theatre_auditorium_seats_path(
+                @theatre,
+                @auditorium
+              ),
+              class: "text-sm font-medium text-red-500 transition hover:text-red-400" %>
+
+        </div>
+
+
+      <% else %>
+
+        <!-- Empty State -->
+        <div class="rounded-2xl border border-gray-800 bg-gray-900 px-6 py-12 text-center">
+
+          <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-800 text-2xl">
+            💺
+          </div>
+
+          <h3 class="text-xl font-bold text-white">
+            No Seats Yet
+          </h3>
+
+          <p class="mx-auto mt-3 max-w-md text-gray-400">
+            No seats have been added to this auditorium yet.
+            Add seats to start building the seating layout.
+          </p>
+
+          <div class="mt-6">
+
+            <%= link_to "Add Seat",
+                new_theatre_auditorium_seat_path(
+                  @theatre,
+                  @auditorium
+                ),
+                class: "inline-flex rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700" %>
+
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  </div>
+</div>

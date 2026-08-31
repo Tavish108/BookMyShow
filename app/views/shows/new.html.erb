@@ -1,0 +1,31 @@
+<div class="min-h-screen w-full bg-gray-950 text-white">
+  <div class="mx-auto max-w-4xl px-6 py-12">
+
+    <!-- Page Header -->
+    <div class="mb-8">
+      <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-red-500">
+        Show Management
+      </p>
+
+      <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        Create Show
+      </h1>
+
+      <p class="mt-3 text-gray-400">
+        Schedule a movie at one of your theatres.
+      </p>
+    </div>
+
+    <!-- Form -->
+    <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+
+      <%= render "form",
+          show: @show,
+          movies: @movies,
+          theatres: @theatres,
+          auditoriums: @auditoriums %>
+
+    </div>
+
+  </div>
+</div>

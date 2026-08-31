@@ -1,0 +1,15 @@
+user:
+  id: 1
+  name: USER
+
+theatre_admin:
+  id: 2
+  name: THEATRE_ADMIN
+
+content_admin:
+  id: 3
+  name: CONTENT_ADMIN
+
+super_admin:
+  id: 4
+  name: SUPER_ADMIN

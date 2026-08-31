@@ -1,0 +1,187 @@
+<div class="min-h-screen bg-gray-950 text-white">
+
+  <!-- Navbar -->
+
+  <nav class="border-b border-gray-800 bg-gray-900">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+
+```
+  <h1 class="text-2xl font-bold tracking-tight text-red-500">
+    BookMyShow
+  </h1>
+
+  <% if logged_in? %>
+    <div class="flex items-center gap-4">
+      <span class="text-sm text-gray-300">
+        Hi, <span class="font-semibold text-white"><%= current_user.name %></span>
+      </span>
+
+      <%= link_to "My Profile", me_path,
+          class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+      <%= button_to "Logout", logout_path,
+          method: :delete,
+          class: "rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700" %>
+    </div>
+
+  <% else %>
+    <div class="flex items-center gap-3">
+
+      <%= link_to "Login", login_path,
+          class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+      <%= link_to "Register", register_path,
+          class: "rounded-lg bg-red-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-red-700" %>
+
+    </div>
+  <% end %>
+
+</div>
+```
+
+  </nav>
+
+  <!-- Main Content -->
+
+  <main class="mx-auto max-w-7xl px-6 py-16">
+
+```
+<% if logged_in? %>
+
+  <!-- Welcome Section -->
+  <div class="mb-12">
+    <p class="text-sm font-medium uppercase tracking-wider text-red-500">
+      Welcome back
+    </p>
+
+    <h2 class="mt-2 text-4xl font-bold">
+      Hello, <%= current_user.name %> 👋
+    </h2>
+
+    <p class="mt-3 text-gray-400">
+      What would you like to watch today?
+    </p>
+  </div>
+
+
+  <!-- Dashboard Cards -->
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+    <!-- Profile -->
+    <%= link_to me_path,
+        class: "group rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800" do %>
+
+      <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-2xl">
+        👤
+      </div>
+
+      <h3 class="text-lg font-semibold">
+        My Profile
+      </h3>
+
+      <p class="mt-2 text-sm text-gray-400">
+        View and manage your profile information.
+      </p>
+
+    <% end %>
+
+
+    <!-- Content Admin -->
+    <% if current_user.has_role?("CONTENT_ADMIN") %>
+
+      <%= link_to content_admin_dashboard_path,
+          class: "group rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800" do %>
+
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/10 text-2xl">
+          🎬
+        </div>
+
+        <h3 class="text-lg font-semibold">
+          Content Dashboard
+        </h3>
+
+        <p class="mt-2 text-sm text-gray-400">
+          Manage movies and movie-related content.
+        </p>
+
+      <% end %>
+
+    <% end %>
+
+
+    <!-- Super Admin -->
+    <% if current_user.has_role?("SUPER_ADMIN") %>
+
+      <%= link_to admin_path,
+          class: "group rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800" do %>
+
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/10 text-2xl">
+          ⚙️
+        </div>
+
+        <h3 class="text-lg font-semibold">
+          Admin Panel
+        </h3>
+
+        <p class="mt-2 text-sm text-gray-400">
+          Manage users, theatres, roles and platform settings.
+        </p>
+
+      <% end %>
+
+    <% end %>
+
+  </div>
+
+
+  <!-- Logout -->
+  <div class="mt-12">
+    <%= button_to "Logout",
+        logout_path,
+        method: :delete,
+        class: "rounded-lg border border-gray-700 px-5 py-2.5 text-sm font-medium text-gray-300 transition hover:border-red-500 hover:bg-red-500/10 hover:text-red-400" %>
+  </div>
+
+<% else %>
+
+  <!-- Guest Hero -->
+  <div class="flex min-h-[60vh] items-center justify-center text-center">
+
+    <div class="max-w-2xl">
+
+      <p class="text-sm font-semibold uppercase tracking-[0.25em] text-red-500">
+        Movies • Shows • Entertainment
+      </p>
+
+      <h2 class="mt-6 text-5xl font-extrabold tracking-tight sm:text-6xl">
+        Your next movie
+        <span class="text-red-500">starts here.</span>
+      </h2>
+
+      <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-400">
+        Discover movies, explore theatres and book your favourite shows
+        with BookMyShow.
+      </p>
+
+      <div class="mt-10 flex justify-center gap-4">
+
+        <%= link_to "Login",
+            login_path,
+            class: "rounded-xl border border-gray-700 px-6 py-3 font-semibold text-white transition hover:bg-gray-800" %>
+
+        <%= link_to "Create Account",
+            register_path,
+            class: "rounded-xl bg-red-600 px-6 py-3 font-semibold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700" %>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<% end %>
+```
+
+  </main>
+
+</div>
