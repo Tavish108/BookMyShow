@@ -10,7 +10,8 @@ class BookingsController < ApplicationController
 
   # GET /shows/:show_id/book
   def new
-    ensure_show_seats
+
+    # ensure_show_seats
 
     @movie = @show.movie
 

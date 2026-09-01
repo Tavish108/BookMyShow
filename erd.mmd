@@ -1,0 +1,102 @@
+erDiagram
+	direction TB
+	Auditorium {
+		integer capacity
+		string name
+		string screen_type
+	}
+	Booking {
+		datetime expires_at
+		string status
+		decimal total_amount
+	}
+	BookingSeat {
+		decimal price
+	}
+	Genre {
+		string name
+	}
+	Language {
+		string name
+	}
+	Movie {
+		string certificate
+		text description
+		integer duration_minutes
+		string poster_url
+		date release_date
+		string status
+		string title
+		string trailer_url
+	}
+	MovieGenre {
+	}
+	Payment {
+		decimal amount
+		datetime paid_at
+		string payment_method
+		string status
+		string transaction_id
+	}
+	Role {
+		string name
+	}
+	Seat {
+		string row_name
+		string seat_category
+		integer seat_number
+		string seat_type
+	}
+	Show {
+		time end_time
+		decimal price
+		date show_date
+		time start_time
+		string status
+	}
+	ShowSeat {
+		datetime held_until
+		string status
+	}
+	Theatre {
+		string address
+		string city
+		string email
+		string name
+		string phone
+		string postal_code
+		string state
+		string status
+	}
+	User {
+		string email
+		datetime email_verified_at
+		string name
+		string password_digest
+		string phone
+		datetime phone_verified_at
+	}
+	UserRole {
+	}
+	Theatre ||--}o Auditorium : ""
+	Auditorium ||--}o Seat : ""
+	Auditorium ||--}o Show : ""
+	User ||--}o Booking : ""
+	Show ||--}o Booking : ""
+	Booking ||--}o BookingSeat : ""
+	Booking o|..}o ShowSeat : ""
+	Booking ||--|o Payment : ""
+	ShowSeat ||--}o BookingSeat : ""
+	Genre ||--}o MovieGenre : ""
+	Genre o|..}o Movie : ""
+	Language ||--}o Movie : ""
+	User ||--}o Movie : ""
+	Movie ||--}o MovieGenre : ""
+	Movie ||--}o Show : ""
+	Role ||--}o UserRole : ""
+	Role o|..}o User : ""
+	Seat ||--}o ShowSeat : ""
+	Theatre ||--}o Show : ""
+	Show ||--}o ShowSeat : ""
+	User ||--}o Theatre : ""
+	User ||--}o UserRole : ""
