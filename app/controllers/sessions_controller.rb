@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 def new
-  redirect_to me_path if logged_in?
+  redirect_to dashboard_path_for_current_user if logged_in?
   @user = User.new
 end
 
@@ -10,7 +10,7 @@ end
     if user&.authenticate(params[:password])
       reset_session
       session[:user_id] = user.id
-      dashboard_path_for_current_user
+     redirect_to dashboard_path_for_current_user
     else
       flash.now[:alert] = "Invalid email or password."
       render :new, status: :unprocessable_entity

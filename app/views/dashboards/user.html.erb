@@ -14,7 +14,6 @@
     <span class="hidden text-sm text-gray-400 sm:block">
       Hi, <span class="font-medium text-white"><%= current_user.name %></span>
     </span>
-
     <%= link_to "My Profile", me_path,
         class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
 
@@ -38,9 +37,6 @@
 <!-- Welcome -->
 <div class="mb-10">
 
-  <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
-    User Dashboard
-  </p>
 
   <h1 class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
     Welcome, <%= current_user.name %> 👋
@@ -80,7 +76,7 @@
 
 
   <!-- Find Shows -->
-  <div class="group rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
+  <%# <div class="group rounded-2xl border border-gray-800 bg-gray-900 p-6 transition hover:-translate-y-1 hover:border-gray-700 hover:bg-gray-800">
 
     <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/10 text-2xl">
       🎟️
@@ -99,7 +95,7 @@
       View Shows
     </button>
 
-  </div>
+  </div> %>
 
 
   <!-- My Bookings -->
@@ -127,48 +123,9 @@
 </div>
 
 
-<!-- Getting Started -->
-<div class="mt-10 rounded-2xl border border-gray-800 bg-gray-900 p-8">
-
-  <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-
-    <div>
-
-      <h2 class="text-2xl font-bold">
-        Ready for your next movie?
-      </h2>
-
-      <p class="mt-2 max-w-2xl text-gray-400">
-        Browse movies, select a theatre and book your seats in just a few steps.
-      </p>
-
-    </div>
-
-    <div class="flex-shrink-0">
-      <button
-        class="rounded-xl bg-red-600 px-6 py-3 font-semibold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700">
-        Explore Movies
-      </button>
-    </div>
-
-  </div>
-
-</div>
 
 
-<!-- Profile -->
-<div class="mt-10">
 
-  <%= link_to me_path,
-      class: "inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition hover:text-white" do %>
-
-    <span>👤</span>
-    Manage My Profile
-    <span>→</span>
-
-  <% end %>
-
-</div>
 
 
   </main>

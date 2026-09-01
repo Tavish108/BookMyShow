@@ -29,6 +29,3 @@ end
 
 
 
-# user.roles
-# user.user_roles
-# user.has_role?("USER")

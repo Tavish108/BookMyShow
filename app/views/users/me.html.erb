@@ -169,21 +169,27 @@
 
 
 <!-- Navigation -->
+ 
+
 <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
-  <%= link_to dashboard_path_for_current_user,
-      class: "inline-flex items-center justify-center gap-2 rounded-lg border border-gray-700 px-5 py-2.5 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" do %>
-
-    ← Home
-
-  <% end %>
-
-
+<%  if current_user.has_role?("USER") && (!current_user.has_role?("SUPER_ADMIN") && !current_user.has_role?("CONTENT_ADMIN") && !current_user.has_role?("THEATRE_ADMIN"))  %>
   <%= link_to dashboard_path_for_current_user,
       class: "inline-flex items-center justify-center gap-2 rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700" do %>
+         Home
+    <% end%>
+  <% end %>
 
-    Dashboard →
+  
+  <%  if current_user.has_role?("SUPER_ADMIN") || 
+         current_user.has_role?("CONTENT_ADMIN") || 
+         current_user.has_role?("THEATRE_ADMIN")  %>
+     
+     <%= link_to dashboard_path_for_current_user,
+      class: "inline-flex items-center justify-center gap-2 rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700" do %>
 
+    Dashboard
+    <% end %> 
   <% end %>
 
 </div>
