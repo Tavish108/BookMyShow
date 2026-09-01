@@ -1,0 +1,176 @@
+<%= form_with model: show, class: "space-y-6" do |form| %>
+
+  <% if show.errors.any? %>
+    <div class="rounded-xl border border-red-800 bg-red-950/40 p-5">
+      <h3 class="mb-3 font-semibold text-red-400">
+        Please fix the following errors:
+      </h3>
+
+      <ul class="space-y-1 text-sm text-red-300">
+        <% show.errors.full_messages.each do |message| %>
+          <li>• <%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Movie -->
+  <div>
+    <%= form.label :movie_id,
+        "Movie",
+        class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+    <%= form.collection_select :movie_id,
+        movies,
+        :id,
+        :title,
+        { prompt: "Select a movie" },
+        {
+          class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white focus:border-red-500 focus:outline-none"
+        } %>
+  </div>
+
+  <!-- Theatre -->
+  <div>
+    <%= form.label :theatre_id,
+        "Theatre",
+        class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+    <%= form.collection_select :theatre_id,
+        theatres,
+        :id,
+        :name,
+        { prompt: "Select a theatre" },
+        {
+          id: "show_theatre_id",
+          class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white focus:border-red-500 focus:outline-none"
+        } %>
+  </div>
+
+  <!-- Auditorium -->
+  <div>
+    <%= form.label :auditorium_id,
+        "Auditorium",
+        class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+    <select
+      name="show[auditorium_id]"
+      id="show_auditorium_id"
+      class="w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white focus:border-red-500 focus:outline-none"
+    >
+      <option value="">Select an auditorium</option>
+
+      <% auditoriums.each do |auditorium| %>
+        <option
+          value="<%= auditorium.id %>"
+          data-theatre-id="<%= auditorium.theatre_id %>"
+          <%= "selected" if show.auditorium_id == auditorium.id %>
+        >
+          <%= auditorium.name %>
+        </option>
+      <% end %>
+    </select>
+  </div>
+
+  <!-- Show Date -->
+  <div>
+    <%= form.label :show_date,
+        "Show Date",
+        class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+    <%= form.date_field :show_date,
+        class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white focus:border-red-500 focus:outline-none" %>
+  </div>
+
+  <!-- Start Time -->
+  <div>
+    <%= form.label :start_time,
+        "Start Time",
+        class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+    <%= form.time_field :start_time,
+        class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white focus:border-red-500 focus:outline-none" %>
+  </div>
+
+  <!-- End Time -->
+  <div>
+    <%= form.label :end_time,
+        "End Time",
+        class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+    <%= form.time_field :end_time,
+        class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white focus:border-red-500 focus:outline-none" %>
+  </div>
+
+  <!-- Price -->
+  <div>
+    <%= form.label :price,
+        "Ticket Price",
+        class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+    <%= form.number_field :price,
+        min: 0.01,
+        step: 0.01,
+        placeholder: "250.00",
+        class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white placeholder-gray-600 focus:border-red-500 focus:outline-none" %>
+  </div>
+
+  <!-- Status -->
+  <div>
+    <%= form.label :status,
+        "Status",
+        class: "mb-2 block text-sm font-medium text-gray-300" %>
+
+    <%= form.select :status,
+        Show::STATUSES.map { |status| [status, status] },
+        { prompt: "Select status" },
+        {
+          class: "w-full rounded-lg border border-gray-700 bg-gray-950 px-4 py-3 text-white focus:border-red-500 focus:outline-none"
+        } %>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex flex-col gap-3 pt-4 sm:flex-row">
+
+    <%= form.submit(
+        show.persisted? ? "Update Show" : "Create Show",
+        class: "inline-flex cursor-pointer items-center justify-center rounded-lg bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700"
+      ) %>
+
+    <%= link_to "Cancel",
+        shows_path,
+        class: "inline-flex items-center justify-center rounded-lg border border-gray-700 px-6 py-3 font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+  </div>
+
+<% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const theatreSelect = document.getElementById("show_theatre_id");
+    const auditoriumSelect = document.getElementById("show_auditorium_id");
+
+    if (!theatreSelect || !auditoriumSelect) return;
+
+    const filterAuditoriums = () => {
+      const theatreId = theatreSelect.value;
+
+      Array.from(auditoriumSelect.options).forEach((option) => {
+        if (!option.dataset.theatreId) {
+          option.hidden = false;
+          return;
+        }
+
+        option.hidden = option.dataset.theatreId !== theatreId;
+
+        if (option.hidden && option.selected) {
+          auditoriumSelect.value = "";
+        }
+      });
+    };
+
+    theatreSelect.addEventListener("change", filterAuditoriums);
+
+    filterAuditoriums();
+  });
+</script>

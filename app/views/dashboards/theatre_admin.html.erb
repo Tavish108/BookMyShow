@@ -37,9 +37,21 @@
       </p>
     </div>
 
+    <div class="flex flex-col gap-3 sm:flex-row">
+
+    <%= link_to "Create Show",
+        new_show_path,
+        class: "inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700" %>
+
+    <%= link_to "All Shows",
+        shows_path,
+        class: "inline-flex items-center justify-center rounded-lg border border-gray-700 px-5 py-3 font-semibold text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
     <%= link_to "Add Theatre",
         new_theatre_path,
-        class: "inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 font-semibold text-white transition hover:bg-red-700" %>
+        class: "inline-flex items-center justify-center rounded-lg border border-gray-700 px-5 py-3 font-semibold text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+  </div>
   </div>
 
   <% if @theatres.any? %>

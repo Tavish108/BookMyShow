@@ -121,36 +121,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_124712) do
     t.index ["auditorium_id"], name: "index_seats_on_auditorium_id"
   end
 
-  create_table "show_seats", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "held_until"
-    t.bigint "seat_id", null: false
-    t.bigint "show_id", null: false
-    t.string "status", default: "AVAILABLE", null: false
-    t.datetime "updated_at", null: false
-    t.index ["held_until"], name: "index_show_seats_on_held_until"
-    t.index ["seat_id"], name: "index_show_seats_on_seat_id"
-    t.index ["show_id", "seat_id"], name: "index_show_seats_on_show_id_and_seat_id", unique: true
-    t.index ["show_id"], name: "index_show_seats_on_show_id"
-    t.index ["status"], name: "index_show_seats_on_status"
-  end
-
-  create_table "shows", force: :cascade do |t|
-    t.bigint "auditorium_id", null: false
-    t.datetime "created_at", null: false
-    t.time "end_time", null: false
-    t.bigint "movie_id", null: false
-    t.decimal "price", precision: 10, scale: 2, null: false
-    t.date "show_date", null: false
-    t.time "start_time", null: false
-    t.string "status", null: false
-    t.bigint "theatre_id", null: false
-    t.datetime "updated_at", null: false
-    t.index ["auditorium_id"], name: "index_shows_on_auditorium_id"
-    t.index ["movie_id"], name: "index_shows_on_movie_id"
-    t.index ["theatre_id"], name: "index_shows_on_theatre_id"
-  end
-
   create_table "theatres", force: :cascade do |t|
     t.string "address"
     t.string "city", null: false
@@ -201,11 +171,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_124712) do
   add_foreign_key "movies", "users", column: "created_by_id"
   add_foreign_key "payments", "bookings"
   add_foreign_key "seats", "auditoria"
-  add_foreign_key "show_seats", "seats"
-  add_foreign_key "show_seats", "shows"
-  add_foreign_key "shows", "auditoria"
-  add_foreign_key "shows", "movies"
-  add_foreign_key "shows", "theatres"
   add_foreign_key "theatres", "users", column: "created_by_id"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
