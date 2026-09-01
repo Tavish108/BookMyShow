@@ -1,0 +1,229 @@
+<div class="min-h-screen bg-gray-950 text-white">
+
+  <!-- Navbar -->
+  <nav class="border-b border-gray-800 bg-gray-900">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+
+      <%= link_to "BookMyShow",
+          root_path,
+          class: "text-2xl font-bold tracking-tight text-red-500 hover:text-red-400 transition" %>
+
+      <div class="flex items-center gap-4">
+
+        <span class="hidden text-sm text-gray-400 sm:block">
+          Hi,
+          <span class="font-medium text-white">
+            <%= current_user.name %>
+          </span>
+        </span>
+
+        <%= link_to "My Profile",
+            me_path,
+            class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+        <%= button_to "Logout",
+            logout_path,
+            method: :delete,
+            class: "rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700" %>
+
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Main -->
+  <main class="mx-auto max-w-5xl px-6 py-12">
+
+    <!-- Success -->
+    <div class="mb-8 rounded-2xl border border-green-800 bg-green-950/40 p-6">
+
+      <div class="flex items-center gap-3">
+
+        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-600 text-xl">
+          ✓
+        </div>
+
+        <div>
+          <h1 class="text-xl font-bold text-green-400">
+            Seats Held Successfully
+          </h1>
+
+          <p class="mt-1 text-sm text-gray-400">
+            Your selected seats are temporarily reserved for you.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Booking Details -->
+    <div class="rounded-2xl border border-gray-800 bg-gray-900 p-8">
+
+      <div class="mb-8">
+
+        <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
+          Booking
+        </p>
+
+        <h1 class="mt-2 text-3xl font-bold">
+          <%= @booking.show.movie.title %>
+        </h1>
+
+      </div>
+
+
+      <!-- Show Information -->
+      <div class="grid gap-6 border-b border-gray-800 pb-8 sm:grid-cols-2">
+
+        <div>
+          <p class="text-sm text-gray-500">
+            Theatre
+          </p>
+
+          <p class="mt-1 font-semibold">
+            <%= @booking.show.theatre.name %>
+          </p>
+        </div>
+
+
+        <div>
+          <p class="text-sm text-gray-500">
+            Auditorium
+          </p>
+
+          <p class="mt-1 font-semibold">
+            <%= @booking.show.auditorium.name %>
+          </p>
+        </div>
+
+
+        <div>
+          <p class="text-sm text-gray-500">
+            Date
+          </p>
+
+          <p class="mt-1 font-semibold">
+            <%= @booking.show.show_date.strftime("%d %B %Y") %>
+          </p>
+        </div>
+
+
+        <div>
+          <p class="text-sm text-gray-500">
+            Showtime
+          </p>
+
+          <p class="mt-1 font-semibold">
+            <%= @booking.show.start_time.strftime("%I:%M %p") %>
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Seats -->
+      <div class="border-b border-gray-800 py-8">
+
+        <p class="text-sm text-gray-500">
+          Selected Seats
+        </p>
+
+        <div class="mt-4 flex flex-wrap gap-3">
+
+          <% @booking.booking_seats.each do |booking_seat| %>
+
+            <% seat = booking_seat.show_seat.seat %>
+
+            <span class="rounded-lg bg-red-600 px-4 py-2 font-semibold">
+              <%= seat.row_name %><%= seat.seat_number %>
+            </span>
+
+          <% end %>
+
+        </div>
+
+      </div>
+
+
+      <!-- Payment / Total -->
+      <div class="flex flex-col gap-6 py-8 sm:flex-row sm:items-center sm:justify-between">
+
+        <div>
+
+          <p class="text-sm text-gray-500">
+            Booking Status
+          </p>
+
+          <span class="mt-2 inline-block rounded-full bg-yellow-500/10 px-4 py-2 text-sm font-semibold text-yellow-400">
+            <%= @booking.status %>
+          </span>
+
+        </div>
+
+
+        <div class="text-left sm:text-right">
+
+          <p class="text-sm text-gray-500">
+            Total Amount
+          </p>
+
+          <p class="mt-1 text-3xl font-bold text-green-400">
+            ₹<%= number_with_precision(
+                  @booking.total_amount,
+                  precision: 2
+                ) %>
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- Hold Timer -->
+      <% if @booking.expires_at.present? %>
+
+        <div class="rounded-xl border border-yellow-800 bg-yellow-950/30 p-5 text-center">
+
+          <p class="text-sm text-gray-400">
+            Seats held until
+          </p>
+
+          <p class="mt-2 text-lg font-bold text-yellow-400">
+            <%= @booking.expires_at.in_time_zone.strftime("%I:%M %p") %>
+          </p>
+
+          <p class="mt-1 text-xs text-gray-500">
+            Complete payment before the hold expires.
+          </p>
+
+        </div>
+
+      <% end %>
+
+
+      <!-- Continue to Payment -->
+      <div class="mt-8 flex justify-center">
+
+     <%= link_to "Continue to Payment",
+            new_booking_payment_path(@booking),
+            class: "rounded-xl bg-red-600 px-8 py-3 font-semibold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700" %>
+
+      </div>
+
+
+      <!-- Back -->
+      <div class="mt-6 text-center">
+
+        <%= link_to "Back to Movies",
+            movies_path,
+            class: "text-sm text-gray-400 transition hover:text-white" %>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

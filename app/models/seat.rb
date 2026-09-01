@@ -1,6 +1,8 @@
 class Seat < ApplicationRecord
   belongs_to :auditorium
 
+  has_many :show_seats, dependent: :destroy
+
   validates :auditorium, presence: true
   validates :row_name, presence: true
   # validates :seat_number, presence: true, numericality: { greater_than: 0 }

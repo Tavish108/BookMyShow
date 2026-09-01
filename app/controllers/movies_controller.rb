@@ -12,11 +12,28 @@ class MoviesController < ApplicationController
     else
       @movies = Movie.includes(:language)
     end
+
+    if params[:search].present?
+      @movies = @movies.where(
+        "title ILIKE ?",
+        "%#{params[:search]}%"
+      )
+    end
+
   end
 
- def show
-  @movie = Movie.includes(:language, :genres).find(params[:id])
- end
+def show
+  @movie = Movie.includes(
+    :language,
+    :genres,
+    shows: [:theatre, :auditorium]
+  ).find(params[:id])
+
+  @shows = @movie.shows
+                 .where(status: "ACTIVE")
+                 .where("show_date >= ?", Date.current)
+                 .order(:show_date, :start_time)
+end
 
   def new
     @movie = Movie.new
@@ -89,4 +106,11 @@ class MoviesController < ApplicationController
 
     redirect_to movies_path, alert: "You are not authorized to manage this movie."
   end
+
+private
+
+
+
+
+
 end
