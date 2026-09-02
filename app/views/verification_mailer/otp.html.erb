@@ -1,0 +1,50 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; color: #222;">
+
+  <h2 style="margin-bottom: 10px;">
+    BookMyShow
+  </h2>
+
+  <p>
+    Hi <%= @recipient.name %>,
+  </p>
+
+  <% if @purpose == "EMAIL_VERIFICATION" %>
+    <p>
+      Use the OTP below to verify your email address.
+    </p>
+  <% elsif @purpose == "PASSWORD_RESET" %>
+    <p>
+      Use the OTP below to reset your BookMyShow password.
+    </p>
+  <% else %>
+    <p>
+      Use the OTP below to complete your verification.
+    </p>
+  <% end %>
+
+  <div style="
+    margin: 30px 0;
+    padding: 20px;
+    background: #f3f3f3;
+    border-radius: 10px;
+    text-align: center;
+  ">
+    <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px;">
+      <%= @otp %>
+    </div>
+  </div>
+
+  <p>
+    This OTP is valid for <strong>10 minutes</strong>.
+  </p>
+
+  <p>
+    If you did not request this, you can safely ignore this email.
+  </p>
+
+  <p style="margin-top: 30px;">
+    Regards,<br>
+    BookMyShow Team
+  </p>
+
+</div>

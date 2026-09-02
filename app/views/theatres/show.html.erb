@@ -127,9 +127,15 @@
             edit_theatre_path(@theatre),
             class: "rounded-lg bg-red-600 px-5 py-3 text-center font-semibold text-white transition hover:bg-red-700" %>
 
+        <%= link_to "Theatre Analytics",
+            sales_record_theatre_path(@theatre),
+            class: "rounded-lg bg-red-600 px-5 py-3 text-center font-semibold text-white transition hover:bg-red-700" %>
+
         <%= link_to "Back to Theatres",
             theatres_path,
             class: "rounded-lg border border-gray-700 px-5 py-3 text-center font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+
+       
 
       </div>
 

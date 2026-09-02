@@ -10,6 +10,16 @@ Rails.application.routes.draw do
 
   get "/register", to: "users#new"
   post "/register", to: "users#create"
+  
+  get "/register/verify",
+    to: "users#verify_registration",
+    as: :verify_registration
+
+post "/register/verify",
+     to: "users#complete_registration_verification"
+
+
+
 
 
   get "/login",
@@ -17,6 +27,30 @@ Rails.application.routes.draw do
 
   post "/login",
        to: "sessions#create"
+
+
+ get "/forgot-password",
+    to: "password_resets#new",
+    as: :forgot_password
+
+post "/forgot-password",
+     to: "password_resets#create"
+
+get "/forgot-password/verify",
+    to: "password_resets#verify",
+    as: :verify_password_reset
+
+post "/forgot-password/verify",
+     to: "password_resets#verify_otp"
+
+get "/reset-password",
+    to: "password_resets#edit",
+    as: :reset_password
+
+patch "/reset-password",
+      to: "password_resets#update"
+
+
 
 
   delete "/logout",
@@ -93,6 +127,7 @@ end
   # ==========================
 
   resources :theatres do
+    get :sales_record, on: :member
 
     resources :auditoriums do
 
