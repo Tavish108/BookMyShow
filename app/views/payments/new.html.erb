@@ -196,22 +196,17 @@
 
 
       <!-- Payment Button -->
+      <!-- Payment Button -->
+
       <div class="mt-8">
+        <button
+          id="razorpay-button"
+          type="button"
+          class="w-full rounded-xl bg-red-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700">
 
-        <%= form_with url: booking_payment_path(@booking),
-                      method: :post,
-                      local: true do %>
+          Pay ₹<%= number_with_precision(@payment.amount, precision: 2) %>
 
-          <button
-            type="submit"
-            class="w-full rounded-xl bg-red-600 px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700">
-
-            Pay ₹<%= number_with_precision(@payment.amount, precision: 2) %>
-
-          </button>
-
-        <% end %>
-
+        </button>
       </div>
 
     </div>
@@ -219,3 +214,85 @@
   </main>
 
 </div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const button = document.getElementById("razorpay-button");
+
+    button.addEventListener("click", function () {
+      const options = {
+        key: "<%= ENV.fetch("RAZORPAY_KEY_ID") %>",
+
+        amount: <%= (@payment.amount.to_d * 100).to_i %>,
+
+        currency: "INR",
+
+        name: "BookMyShow",
+
+        description: "<%= j @booking.show.movie.title %>",
+
+        order_id: "<%= @razorpay_order.id %>",
+
+        handler: function (response) {
+          const form = document.createElement("form");
+
+          form.method = "POST";
+          form.action = "<%= booking_payment_path(@booking) %>";
+
+          const csrfToken = document.querySelector(
+            'meta[name="csrf-token"]'
+          ).content;
+
+          const csrfInput = document.createElement("input");
+          csrfInput.type = "hidden";
+          csrfInput.name = "authenticity_token";
+          csrfInput.value = csrfToken;
+          form.appendChild(csrfInput);
+
+          const paymentIdInput = document.createElement("input");
+          paymentIdInput.type = "hidden";
+          paymentIdInput.name = "razorpay_payment_id";
+          paymentIdInput.value = response.razorpay_payment_id;
+          form.appendChild(paymentIdInput);
+
+          const orderIdInput = document.createElement("input");
+          orderIdInput.type = "hidden";
+          orderIdInput.name = "razorpay_order_id";
+          orderIdInput.value = response.razorpay_order_id;
+          form.appendChild(orderIdInput);
+
+          const signatureInput = document.createElement("input");
+          signatureInput.type = "hidden";
+          signatureInput.name = "razorpay_signature";
+          signatureInput.value = response.razorpay_signature;
+          form.appendChild(signatureInput);
+
+          document.body.appendChild(form);
+          form.submit();
+        },
+
+        theme: {
+          color: "#dc2626"
+        },
+
+        modal: {
+          ondismiss: function () {
+            console.log("Razorpay checkout closed.");
+          }
+        }
+      };
+
+      const razorpay = new Razorpay(options);
+
+      razorpay.on("payment.failed", function (response) {
+        console.log("Payment failed:", response.error);
+
+        alert("Payment failed. Please try again.");
+      });
+
+      razorpay.open();
+    });
+  });
+</script>

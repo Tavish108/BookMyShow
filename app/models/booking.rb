@@ -7,7 +7,7 @@ class Booking < ApplicationRecord
 
   has_one :payment, dependent: :destroy
 
-  STATUSES = %w[PENDING CONFIRMED EXPIRED CANCELLED].freeze
+  STATUSES = %w[PENDING CONFIRMED EXPIRED CANCELLED FAILED REFUNDED].freeze
 
   validates :status,
             presence: true,

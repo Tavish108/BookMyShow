@@ -8,6 +8,9 @@ gem "propshaft"
 # gem "sqlite3", ">= 2.1"
 
 gem "pg"
+
+gem "razorpay"
+gem "dotenv-rails", groups: [ :development, :test ]
 gem "bcrypt"
 
 # Use the Puma web server [https://github.com/puma/puma]
