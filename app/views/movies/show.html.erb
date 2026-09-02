@@ -1,268 +1,280 @@
 <div class="min-h-screen bg-gray-950 text-white">
 
   <!-- Navbar -->
-
   <nav class="border-b border-gray-800 bg-gray-900">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
-```
-  <%= link_to "BookMyShow", root_path,
-      class: "text-2xl font-bold tracking-tight text-red-500 transition hover:text-red-400" %>
+      <%= link_to "BookMyShow",
+          root_path,
+          class: "text-2xl font-bold tracking-tight text-red-500 hover:text-red-400 transition" %>
 
-  <div class="flex items-center gap-3">
+      <div class="flex items-center gap-4">
 
-    <%= link_to "Movies",
-        movies_path,
-        class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+        <span class="hidden text-sm text-gray-400 sm:block">
+          Hi,
+          <span class="font-medium text-white">
+            <%= current_user.name %>
+          </span>
+        </span>
 
-    <%= link_to "Dashboard",
-        user_dashboard_path,
-        class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+        <%= link_to "My Profile",
+            me_path,
+            class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
 
-    <%= link_to "Profile",
-        me_path,
-        class: "rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
+        <%= button_to "Logout",
+            logout_path,
+            method: :delete,
+            class: "rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700" %>
 
-    <%= button_to "Logout",
-        logout_path,
-        method: :delete,
-        class: "rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700" %>
-
-  </div>
-
-</div>
-```
-
+      </div>
+    </div>
   </nav>
 
-  <!-- Main -->
 
-  <main class="mx-auto max-w-6xl px-6 py-12">
+  <!-- Main Content -->
+  <main class="mx-auto max-w-7xl px-6 py-12">
 
-```
-<!-- Movie Hero -->
-<div class="overflow-hidden rounded-3xl border border-gray-800 bg-gray-900">
+    <!-- Back -->
+    <%= link_to movies_path,
+        class: "inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition" do %>
+      ← Back to Movies
+    <% end %>
 
-  <div class="grid lg:grid-cols-[320px_1fr]">
 
-    <!-- Poster -->
-    <div class="bg-gray-800">
+    <!-- Movie Details -->
+    <div class="mt-8 grid gap-10 md:grid-cols-[280px_1fr]">
 
-      <% if @movie.poster_url.present? %>
+      <!-- Poster -->
+      <div class="overflow-hidden rounded-2xl border border-gray-800 bg-gray-900">
 
-        <img
-          src="<%= @movie.poster_url %>"
-          alt="<%= @movie.title %> poster"
-          class="h-full min-h-[450px] w-full object-cover lg:min-h-[520px]">
+        <% if @movie.poster_url.present? %>
+
+          <%= image_tag @movie.poster_url,
+              alt: @movie.title,
+              class: "w-full object-cover" %>
+
+        <% else %>
+
+          <div class="flex aspect-[2/3] items-center justify-center text-gray-600">
+            No Poster
+          </div>
+
+        <% end %>
+
+      </div>
+
+
+      <!-- Movie Information -->
+      <div>
+
+        <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
+          Movie
+        </p>
+
+        <h1 class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
+          <%= @movie.title %>
+        </h1>
+
+
+        <!-- Movie Metadata -->
+        <div class="mt-5 flex flex-wrap gap-3">
+
+          <% if @movie.language.present? %>
+            <span class="rounded-full bg-gray-800 px-4 py-2 text-sm text-gray-300">
+              <%= @movie.language.name %>
+            </span>
+          <% end %>
+
+
+          <% if @movie.duration_minutes.present? %>
+            <span class="rounded-full bg-gray-800 px-4 py-2 text-sm text-gray-300">
+              <%= @movie.duration_minutes %> min
+            </span>
+          <% end %>
+
+
+          <% if @movie.certificate.present? %>
+            <span class="rounded-full bg-gray-800 px-4 py-2 text-sm text-gray-300">
+              <%= @movie.certificate %>
+            </span>
+          <% end %>
+
+           <% if @movie.trailer_url.present? %>
+            <span class="rounded-full bg-gray-800 px-4 py-2 text-sm text-gray-300">
+              <%= link_to "Trailer" , @movie.trailer_url, target: "_blank",rel: "noopener noreferrer" %>
+            </span>
+          <% end %>
+
+        </div>
+
+
+        <!-- Genres -->
+        <% if @movie.genres.any? %>
+
+          <div class="mt-5 flex flex-wrap gap-2">
+
+            <% @movie.genres.each do |genre| %>
+
+              <span class="rounded-md border border-gray-700 px-3 py-1 text-xs text-gray-400">
+                <%= genre.name %>
+              </span>
+
+            <% end %>
+
+          </div>
+
+        <% end %>
+
+
+        <!-- Description -->
+        <% if @movie.description.present? %>
+
+          <p class="mt-8 max-w-3xl leading-7 text-gray-400">
+            <%= @movie.description %>
+          </p>
+
+        <% end %>
+
+      </div>
+
+    </div>
+
+
+    <!-- Shows Section -->
+    <section class="mt-16">
+
+      <div class="mb-8">
+
+        <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
+          Showtimes
+        </p>
+
+        <h2 class="mt-2 text-3xl font-bold">
+          Available Shows
+        </h2>
+
+        <p class="mt-2 text-gray-400">
+          Choose a theatre, date and showtime.
+        </p>
+
+      </div>
+
+
+      <% if @shows.any? %>
+
+        <!-- Group Shows by Theatre -->
+       <% @shows.group_by { |show| show.theatre }.each do |theatre, shows| %>
+
+          <div class="mb-6 rounded-2xl border border-gray-800 bg-gray-900 p-6">
+
+            <!-- Theatre -->
+            <div class="flex items-center justify-between">
+
+              <div>
+
+                <h3 class="text-xl font-semibold">
+                  <%= theatre.name %>
+                </h3>
+
+                <p class="mt-1 text-sm text-gray-500">
+                  Available showtimes
+                </p>
+
+              </div>
+
+              <span class="rounded-full bg-red-500/10 px-3 py-1 text-xs font-medium text-red-400">
+                <%= shows.length %> shows
+              </span>
+
+            </div>
+
+
+            <!-- Shows -->
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+              <% shows.each do |show| %>
+
+                <div class="rounded-xl border border-gray-800 bg-gray-950 p-5 transition hover:border-gray-700">
+
+                  <!-- Date -->
+                  <p class="text-sm text-gray-500">
+                    <%= show.show_date.strftime("%d %b %Y") %>
+                  </p>
+
+
+                  <!-- Time -->
+                  <p class="mt-3 text-2xl font-bold">
+                    <%= show.start_time.strftime("%I:%M %p") %>
+                  </p>
+
+
+                  <!-- Auditorium -->
+                  <p class="mt-1 text-sm text-gray-400">
+                    <%= show.auditorium.name %>
+                  </p>
+
+
+                  <!-- Price -->
+                  <div class="mt-5 flex items-center justify-between">
+
+                    <div>
+
+                      <p class="text-xs text-gray-500">
+                        Ticket Price
+                      </p>
+
+                      <p class="text-lg font-semibold text-green-400">
+                        ₹<%= show.price %>
+                      </p>
+
+                    </div>
+
+
+                  
+                  <%= link_to "Book",
+                     new_booking_path(show_id: show.id),
+                     data: { turbo_prefetch: false },
+                    class: "rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700" %>
+
+                  </div>
+
+                </div>
+
+              <% end %>
+
+            </div>
+
+          </div>
+
+        <% end %>
+
 
       <% else %>
 
-        <div class="flex min-h-[450px] items-center justify-center lg:min-h-[520px]">
+        <!-- No Shows -->
+        <div class="rounded-2xl border border-gray-800 bg-gray-900 p-10 text-center">
 
-          <div class="text-center">
-
-            <div class="text-6xl">
-              🎬
-            </div>
-
-            <p class="mt-4 text-sm text-gray-500">
-              No poster available
-            </p>
-
+          <div class="text-5xl">
+            🎬
           </div>
+
+          <h3 class="mt-5 text-xl font-semibold">
+            No shows available
+          </h3>
+
+          <p class="mt-2 text-gray-400">
+            There are currently no upcoming shows for this movie.
+          </p>
+
+          <%= link_to "Browse Other Movies",
+              movies_path,
+              class: "mt-6 inline-block rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700" %>
 
         </div>
 
       <% end %>
 
-    </div>
-
-
-    <!-- Movie Information -->
-    <div class="p-7 sm:p-10">
-
-      <!-- Status -->
-      <div class="mb-5 flex flex-wrap items-center gap-3">
-
-        <% if @movie.status.to_s.upcase == "PUBLISHED" %>
-
-          <span class="rounded-full border border-green-500/30 bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-400">
-            Published
-          </span>
-
-        <% elsif @movie.status.to_s.upcase == "DRAFT" %>
-
-          <span class="rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3 py-1 text-xs font-semibold text-yellow-400">
-            Draft
-          </span>
-
-        <% else %>
-
-          <span class="rounded-full border border-gray-700 bg-gray-800 px-3 py-1 text-xs font-semibold text-gray-400">
-            <%= @movie.status %>
-          </span>
-
-        <% end %>
-
-        <span class="rounded-md bg-gray-800 px-2.5 py-1 text-xs font-semibold text-gray-300">
-          <%= @movie.certificate %>
-        </span>
-
-      </div>
-
-
-      <!-- Title -->
-      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
-        <%= @movie.title %>
-      </h1>
-
-
-      <!-- Quick Info -->
-      <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-gray-400">
-
-        <span class="flex items-center gap-2">
-          🌐
-          <%= @movie.language.name %>
-        </span>
-
-        <span class="flex items-center gap-2">
-          ⏱️
-          <%= @movie.duration_minutes %> min
-        </span>
-
-        <span class="flex items-center gap-2">
-          📅
-          <%= @movie.release_date %>
-        </span>
-
-      </div>
-
-
-      <!-- Genres -->
-      <div class="mt-6 flex flex-wrap gap-2">
-
-        <% @movie.genres.each do |genre| %>
-
-          <span class="rounded-full bg-gray-800 px-3 py-1.5 text-xs font-medium text-gray-300">
-            <%= genre.name %>
-          </span>
-
-        <% end %>
-
-      </div>
-
-
-      <!-- Description -->
-      <div class="mt-8">
-
-        <h2 class="text-lg font-semibold">
-          About the Movie
-        </h2>
-
-        <p class="mt-3 max-w-3xl text-sm leading-7 text-gray-400">
-          <%= @movie.description %>
-        </p>
-
-      </div>
-
-
-      <!-- Actions -->
-      <div class="mt-8 flex flex-wrap gap-3">
-
-        <% if @movie.trailer_url.present? %>
-
-          <%= link_to @movie.trailer_url,
-              target: "_blank",
-              rel: "noopener noreferrer",
-              class: "inline-flex items-center gap-2 rounded-xl border border-gray-700 px-5 py-3 text-sm font-semibold text-gray-200 transition hover:bg-gray-800 hover:text-white" do %>
-
-            ▶ Watch Trailer
-
-          <% end %>
-
-        <% end %>
-
-        <% if @movie.status.to_s.upcase == "PUBLISHED" %>
-
-          <button
-            class="inline-flex items-center gap-2 rounded-xl bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700">
-
-            🎟️ Book Tickets
-
-          </button>
-
-        <% end %>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- Admin Actions -->
-<% if current_user.has_role?("SUPER_ADMIN") ||
-      @movie.created_by_id == current_user.id %>
-
-  <div class="mt-8 rounded-2xl border border-gray-800 bg-gray-900 p-6">
-
-    <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-
-      <div>
-
-        <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
-          Content Management
-        </p>
-
-        <h2 class="mt-1 text-lg font-semibold">
-          Movie Actions
-        </h2>
-
-      </div>
-
-
-      <div class="flex flex-wrap gap-3">
-
-        <%= link_to "Edit Movie",
-            edit_movie_path(@movie),
-            class: "rounded-lg border border-gray-700 px-5 py-2.5 text-sm font-medium text-gray-300 transition hover:bg-gray-800 hover:text-white" %>
-
-
-        <%= button_to "Delete Movie",
-            movie_path(@movie),
-            method: :delete,
-            data: { turbo_confirm: "Are you sure you want to delete this movie?" },
-            class: "rounded-lg border border-red-500/30 bg-red-500/10 px-5 py-2.5 text-sm font-medium text-red-400 transition hover:bg-red-500/20" %>
-
-      </div>
-
-    </div>
-
-  </div>
-
-<% end %>
-
-
-<!-- Navigation -->
-<div class="mt-8 flex flex-wrap items-center gap-5">
-
-  <%= link_to "← Back to Movies",
-      movies_path,
-      class: "text-sm font-medium text-gray-500 transition hover:text-gray-300" %>
-
-  <% if current_user.has_role?("CONTENT_ADMIN") ||
-        current_user.has_role?("SUPER_ADMIN") %>
-
-    <%= link_to "Content Dashboard →",
-        content_admin_dashboard_path,
-        class: "text-sm font-medium text-gray-500 transition hover:text-gray-300" %>
-
-  <% end %>
-
-</div>
-```
+    </section>
 
   </main>
 

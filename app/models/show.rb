@@ -3,6 +3,9 @@ class Show < ApplicationRecord
   belongs_to :theatre
   belongs_to :auditorium
 
+   has_many :show_seats, dependent: :destroy
+  has_many :bookings, dependent: :destroy
+
   STATUSES = %w[ACTIVE INACTIVE].freeze
   validates :show_date, presence: true
   validates :start_time, presence: true
