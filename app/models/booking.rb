@@ -6,6 +6,7 @@ class Booking < ApplicationRecord
   has_many :show_seats, through: :booking_seats
 
   has_one :payment, dependent: :destroy
+  has_one :ticket, dependent: :destroy
 
   STATUSES = %w[PENDING CONFIRMED EXPIRED CANCELLED FAILED REFUNDED].freeze
 

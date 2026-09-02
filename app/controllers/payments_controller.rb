@@ -1,3 +1,4 @@
+require "securerandom"
 class PaymentsController < ApplicationController
   before_action :require_login
   before_action :set_booking
@@ -123,10 +124,15 @@ class PaymentsController < ApplicationController
         status: "CONFIRMED",
         expires_at: nil
       )
+
+      @booking.create_ticket!(
+        ticket_number: "BMS-#{SecureRandom.alphanumeric(10).upcase}",
+        qr_token: SecureRandom.hex(20)
+      )
     end
 
-    redirect_to booking_path(@booking),
-                notice: "Payment successful. Your booking is confirmed."
+    redirect_to ticket_path(@booking.ticket),
+                notice: "Payment Successful. Your Booking Is Confirmed."
 
   rescue Razorpay::Error => e
     Rails.logger.error(
