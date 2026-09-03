@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       return
     end
 
-    # Find existing pending registration or create a new one
+    # Find existing pending registration or create a new one   find or initatialize
     @pending_registration = PendingRegistration.find_or_initialize_by(
       email: @user.email.downcase
     )
@@ -99,12 +99,18 @@ class UsersController < ApplicationController
 
     if email_result[:success]
 
-      User.create!(
+     user =  User.create!(
         name: @pending_registration.name,
         email: @pending_registration.email,
         phone: @pending_registration.phone,
         password_digest: @pending_registration.password_digest,
         email_verified_at: Time.current
+      )
+      user_role = Role.find_by!(name: "USER")
+
+      UserRole.create!(
+      user: user  ,
+      role: user_role
       )
 
       @pending_registration.destroy

@@ -35,8 +35,17 @@ erDiagram
 		decimal amount
 		datetime paid_at
 		string payment_method
+		string razorpay_order_id
+		string razorpay_signature
 		string status
 		string transaction_id
+	}
+	PendingRegistration {
+		string email
+		datetime expires_at
+		string name
+		string password_digest
+		string phone
 	}
 	Role {
 		string name
@@ -78,6 +87,13 @@ erDiagram
 	}
 	UserRole {
 	}
+	VerificationOtp {
+		integer attempts
+		datetime expires_at
+		string otp_digest
+		string purpose
+		datetime verified_at
+	}
 	Theatre ||--}o Auditorium : ""
 	Auditorium ||--}o Seat : ""
 	Auditorium ||--}o Show : ""
@@ -93,6 +109,7 @@ erDiagram
 	User ||--}o Movie : ""
 	Movie ||--}o MovieGenre : ""
 	Movie ||--}o Show : ""
+	PendingRegistration o|--}o VerificationOtp : ""
 	Role ||--}o UserRole : ""
 	Role o|..}o User : ""
 	Seat ||--}o ShowSeat : ""
@@ -100,3 +117,4 @@ erDiagram
 	Show ||--}o ShowSeat : ""
 	User ||--}o Theatre : ""
 	User ||--}o UserRole : ""
+	User o|--}o VerificationOtp : ""
