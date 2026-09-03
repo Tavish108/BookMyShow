@@ -1,0 +1,16 @@
+id,name,address,city,state,postal_code,phone,email,status,created_at,updated_at,created_by_id
+1,BookMyShow Test Theatre 01,"101 Main Road, Sector 11",Gurugram,Haryana,122001,918689107690,theatre1@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,101
+2,BookMyShow Test Theatre 02,"102 Main Road, Sector 12",Hyderabad,Telangana,500001,919314905595,theatre2@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,102
+3,BookMyShow Test Theatre 03,"103 Main Road, Sector 13",Kolkata,West Bengal,700001,919766159767,theatre3@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,103
+4,BookMyShow Test Theatre 04,"104 Main Road, Sector 14",Noida,Uttar Pradesh,201301,919185113890,theatre4@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,104
+5,BookMyShow Test Theatre 05,"105 Main Road, Sector 15",Delhi,Delhi,110001,917367377426,theatre5@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,105
+6,BookMyShow Test Theatre 06,"106 Main Road, Sector 16",Noida,Uttar Pradesh,201301,918671652020,theatre6@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,106
+7,BookMyShow Test Theatre 07,"107 Main Road, Sector 17",Pune,Maharashtra,411001,919351453207,theatre7@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,107
+8,BookMyShow Test Theatre 08,"108 Main Road, Sector 18",Mumbai,Maharashtra,400001,918333242809,theatre8@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,108
+9,BookMyShow Test Theatre 09,"109 Main Road, Sector 19",Gurugram,Haryana,122001,919545721137,theatre9@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,109
+10,BookMyShow Test Theatre 10,"110 Main Road, Sector 20",Bengaluru,Karnataka,560001,917696689449,theatre10@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,110
+11,BookMyShow Test Theatre 11,"111 Main Road, Sector 21",Mumbai,Maharashtra,400001,918268268811,theatre11@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,111
+12,BookMyShow Test Theatre 12,"112 Main Road, Sector 22",Kolkata,West Bengal,700001,918226551575,theatre12@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,112
+13,BookMyShow Test Theatre 13,"113 Main Road, Sector 23",Pune,Maharashtra,411001,917575546015,theatre13@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,113
+14,BookMyShow Test Theatre 14,"114 Main Road, Sector 24",Hyderabad,Telangana,500001,917810448082,theatre14@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,114
+15,BookMyShow Test Theatre 15,"115 Main Road, Sector 25",Gurugram,Haryana,122001,919602540296,theatre15@example.com,ACTIVE,2026-09-03 15:40:00,2026-09-03 15:40:00,115

@@ -133,6 +133,126 @@
     </div>
 
 
+<!-- Platform Collection Analytics -->
+
+<div class="mt-10">
+
+  <div class="mb-6">
+
+    <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
+      Platform Analytics
+    </p>
+
+    <h2 class="mt-2 text-2xl font-bold text-white">
+      Movie Collections
+    </h2>
+
+    <p class="mt-2 text-gray-400">
+      View successful ticket collections across all theatres.
+    </p>
+
+  </div>
+
+
+  <% if @movie_collections.any? %>
+
+    <div class="overflow-hidden rounded-2xl border border-gray-800 bg-gray-900">
+
+      <div class="overflow-x-auto">
+
+        <table class="w-full text-left">
+
+          <thead class="border-b border-gray-800 bg-gray-900 text-sm text-gray-500">
+
+            <tr>
+
+              <th class="px-6 py-4 font-medium">
+                Movie
+              </th>
+
+              <th class="px-6 py-4 font-medium">
+                Bookings
+              </th>
+
+              <th class="px-6 py-4 font-medium">
+                Tickets Sold
+              </th>
+
+              <th class="px-6 py-4 font-medium">
+                Collection
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody class="divide-y divide-gray-800">
+
+            <% @movie_collections.each do |movie| %>
+
+              <tr class="transition hover:bg-gray-800/50">
+
+                <td class="px-6 py-5">
+
+                  <div class="font-semibold text-white">
+                    <%= movie.title %>
+                  </div>
+
+                </td>
+
+
+                <td class="px-6 py-5 text-gray-300">
+                  <%= movie.bookings_count %>
+                </td>
+
+
+                <td class="px-6 py-5 text-gray-300">
+                  <%= movie.tickets_count %>
+                </td>
+
+
+                <td class="px-6 py-5 font-semibold text-green-400">
+                  ₹<%= number_with_delimiter(movie.collection.to_f.round(2)) %>
+                </td>
+
+              </tr>
+
+            <% end %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  <% else %>
+
+    <div class="rounded-xl border border-dashed border-gray-700 bg-gray-900 px-6 py-12 text-center">
+
+      <div class="mb-4 text-4xl">
+        📊
+      </div>
+
+      <h3 class="text-lg font-semibold text-white">
+        No collection data yet
+      </h3>
+
+      <p class="mt-2 text-sm text-gray-400">
+        Movie collections will appear after successful ticket payments.
+      </p>
+
+    </div>
+
+  <% end %>
+
+</div>
+
+
+
+
     <!-- Quick Actions -->
     <div class="mt-10 rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
 

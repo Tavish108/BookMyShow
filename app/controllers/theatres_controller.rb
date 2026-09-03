@@ -1,6 +1,6 @@
 class TheatresController < ApplicationController
   before_action :require_login
-  before_action :set_theatre, only: %i[show edit update destroy]
+  before_action :set_theatre, only: %i[show edit update destroy sales_record]
 
   def index
     @theatres = current_user.created_theatres
@@ -40,6 +40,10 @@ class TheatresController < ApplicationController
     redirect_to theatres_path, notice: "Theatre was successfully deleted."
   end
 
+
+    def sales_record
+  @theatre_report = CollectionReport.for_theatre(@theatre)
+    end
   private
 
   def set_theatre

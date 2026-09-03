@@ -414,8 +414,9 @@ DEPENDENCIES
   brakeman
   bundler-audit
   capybara
+  csv (~> 3.3)
   debug
-  dotenv-rails
+  dotenv-rails (~> 3.2)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

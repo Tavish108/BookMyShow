@@ -7,10 +7,10 @@ class User < ApplicationRecord
   has_many :bookings, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
+  has_many :verification_otps, dependent: :destroy
 
   normalizes :email, with: ->(email) { email.strip.downcase } #" tavish@gmail.com " -> "tavish@gmail.com"
 
-  
   has_many :created_movies,
          class_name: "Movie",
          foreign_key: :created_by_id,

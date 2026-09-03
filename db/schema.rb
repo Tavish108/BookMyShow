@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_02_100218) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_02_122427) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -103,6 +103,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_02_100218) do
     t.index ["razorpay_order_id"], name: "index_payments_on_razorpay_order_id", unique: true
     t.index ["status"], name: "index_payments_on_status"
     t.index ["transaction_id"], name: "index_payments_on_transaction_id", unique: true
+  end
+
+  create_table "pending_registrations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.datetime "expires_at", null: false
+    t.string "name", null: false
+    t.string "password_digest", null: false
+    t.string "phone"
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_pending_registrations_on_email", unique: true
   end
 
   create_table "roles", force: :cascade do |t|
@@ -209,11 +220,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_02_100218) do
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false
     t.string "otp_digest", null: false
+    t.bigint "pending_registration_id"
     t.string "purpose", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "verified_at"
     t.index ["expires_at"], name: "index_verification_otps_on_expires_at"
+    t.index ["pending_registration_id", "purpose"], name: "index_verification_otps_on_pending_registration_id_and_purpose"
+    t.index ["pending_registration_id"], name: "index_verification_otps_on_pending_registration_id"
     t.index ["purpose"], name: "index_verification_otps_on_purpose"
     t.index ["user_id"], name: "index_verification_otps_on_user_id"
   end
@@ -238,5 +252,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_02_100218) do
   add_foreign_key "tickets", "bookings"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
+  add_foreign_key "verification_otps", "pending_registrations"
   add_foreign_key "verification_otps", "users"
 end
