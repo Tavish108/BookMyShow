@@ -10,19 +10,15 @@ class BookingsController < ApplicationController
 
   # GET /shows/:show_id/book
   def new
+    
+  ensure_show_seats
 
-     ensure_show_seats
+  @movie = @show.movie
 
-    @movie = @show.movie
-
-    @show_seats = @show.show_seats
-                         .includes(:seat)
-                         .sort_by do |show_seat|
-                           [
-                             show_seat.seat.row_name,
-                             show_seat.seat.seat_number
-                           ]
-                         end
+  @show_seats = @show.show_seats       #query optimised by sorting in postgress table itself
+                     .joins(:seat)
+                     .includes(:seat)
+                     .order("seats.row_name ASC, seats.seat_number ASC")
   end
 
 
