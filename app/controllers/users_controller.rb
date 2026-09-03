@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   def new
     redirect_to dashboard_path_for_current_user if logged_in?
 
@@ -48,7 +47,7 @@ class UsersController < ApplicationController
   def me
     unless logged_in?
       redirect_to login_path, alert: "Please log in first."
-      return
+      nil
     end
   end
 
@@ -109,7 +108,7 @@ class UsersController < ApplicationController
       user_role = Role.find_by!(name: "USER")
 
       UserRole.create!(
-      user: user  ,
+      user: user,
       role: user_role
       )
 
@@ -150,5 +149,4 @@ class UsersController < ApplicationController
       purpose: "EMAIL_VERIFICATION"
     ).otp.deliver_now
   end
-
 end

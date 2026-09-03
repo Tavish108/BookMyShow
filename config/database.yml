@@ -5,7 +5,13 @@ default: &default
 
 development:
   <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  host: ep-damp-bar-ax7kbwsj-pooler.c-4.us-east-2.aws.neon.tech
+  port: 5432
+  database: neondb
+  username: <%= ENV["NEON_DB_USERNAME"] %>
+  password: <%= ENV["NEON_DB_PASSWORD"] %>
+  sslmode: require
+  channel_binding: require
 
 test:
   <<: *default
