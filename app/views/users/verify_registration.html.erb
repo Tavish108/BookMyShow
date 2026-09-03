@@ -31,6 +31,42 @@
           </div>
         <% end %>
 
+<%# timer %>
+
+<div class="mt-4 text-center">
+
+  <div id="otp-timer" class="text-sm text-gray-400">
+    Resend OTP in
+    <span
+      id="countdown"
+      class="font-semibold text-white"
+      data-otp-sent-at="<%= @pending_registration.otp_sent_at.iso8601 %>"
+    >
+      2:00
+    </span>
+  </div>
+
+  <div
+    id="resend-message"
+    class="hidden text-sm font-semibold text-green-400"
+  >
+    You can resend the OTP now.
+  </div>
+
+  <div id="resend-button" class="mt-3 hidden">
+    <%= button_to "Resend OTP",
+        resend_otp_path,
+        method: :post,
+        data: { turbo: false },
+        class: "rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700" %>
+  </div>
+
+</div>
+
+
+
+
+
         <%= form_with url: verify_registration_path,
                       method: :post,
                       class: "space-y-6" do |form| %>

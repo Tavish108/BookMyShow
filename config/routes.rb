@@ -18,6 +18,9 @@ Rails.application.routes.draw do
 post "/register/verify",
      to: "users#complete_registration_verification"
 
+post  "/register/verify/resend",
+       to: "users#resend_otp",
+       as: :resend_otp
 
 
 

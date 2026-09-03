@@ -98,7 +98,7 @@ class UsersController < ApplicationController
     )
 
     if email_result[:success]
-
+    User.transaction do 
      user =  User.create!(
         name: @pending_registration.name,
         email: @pending_registration.email,
@@ -109,9 +109,10 @@ class UsersController < ApplicationController
       user_role = Role.find_by!(name: "USER")
 
       UserRole.create!(
-      user: user  ,
+      user: user,
       role: user_role
       )
+    end
 
       @pending_registration.destroy
       session.delete(:pending_registration_id)
@@ -123,8 +124,45 @@ class UsersController < ApplicationController
 
       render :verify_registration,
              status: :unprocessable_entity
+    
     end
   end
+
+def resend_otp
+  @pending_registration =
+    PendingRegistration.find_by(id: session[:pending_registration_id])
+
+  unless @pending_registration
+    redirect_to register_path,
+                alert: "Verification session expired. Please register again."
+    return
+  end
+
+  if @pending_registration.expired?
+    @pending_registration.destroy
+    session.delete(:pending_registration_id)
+
+    redirect_to register_path,
+                alert: "Registration session expired. Please register again."
+    return
+  end
+
+  if @pending_registration.otp_sent_at.present? &&
+     @pending_registration.otp_sent_at > 2.minutes.ago
+
+    redirect_to verify_registration_path,
+                alert: "Please wait before requesting another OTP."
+    return
+  end
+
+  generate_verification_otps
+
+  redirect_to verify_registration_path,
+              notice: "OTP sent successfully"
+end
+
+
+
 
   private
 
@@ -149,6 +187,10 @@ class UsersController < ApplicationController
       otp: email_result[:otp],
       purpose: "EMAIL_VERIFICATION"
     ).otp.deliver_now
+
+   @pending_registration.update!(
+    otp_sent_at: Time.current
+   )
   end
 
 end
