@@ -2,15 +2,23 @@ class BookingsController < ApplicationController
   before_action :require_login
 
   before_action :set_show,
-                only: [:new, :create]
+                only: [ :new, :create ]
 
   before_action :set_booking,
-                only: [:show]
+                only: [ :show ]
 
 
+
+  def index
+    @bookings = current_user.bookings
+                            .includes(:payment,
+                                      :ticket,
+                                      show: [ :movie, :theatre, :auditorium ],
+                                      booking_seats: { show_seat: :seat }
+                            ).order(created_at: :desc)
+  end
   # GET /shows/:show_id/book
   def new
-
      ensure_show_seats
 
     @movie = @show.movie
@@ -68,7 +76,6 @@ class BookingsController < ApplicationController
 
   # Find the show
   def set_show
-
     @show = Show
       .includes(
         :movie,
@@ -76,13 +83,11 @@ class BookingsController < ApplicationController
         :auditorium
       )
       .find(params[:show_id])
-
   end
 
 
   # Find current user's booking
   def set_booking
-
     @booking = current_user.bookings
       .includes(
         :show,
@@ -92,34 +97,26 @@ class BookingsController < ApplicationController
         }
       )
       .find(params[:id])
-
   end
 
 
   # Create ShowSeat records for every
   # seat in the auditorium if they don't exist.
   def ensure_show_seats
-
     @show.auditorium.seats.find_each do |seat|
-
       ShowSeat.find_or_create_by!(
         show: @show,
         seat: seat
       ) do |show_seat|
-
         show_seat.status = "AVAILABLE"
-
       end
-
     end
-
   end
 
 
-  # Create booking and hold seats
+# Create booking and hold seats
 def create_booking_with_hold(seat_ids)
   Booking.transaction do
-
     seat_ids = Array(seat_ids).map(&:to_i).uniq
 
     show_seats = ShowSeat
@@ -174,5 +171,4 @@ def create_booking_with_hold(seat_ids)
     booking
   end
 end
-
 end
