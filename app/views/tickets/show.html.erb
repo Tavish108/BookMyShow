@@ -1,0 +1,373 @@
+<div class="min-h-screen w-full bg-gray-950 px-4 py-10 text-white sm:px-6">
+
+  <div class="mx-auto w-full max-w-3xl">
+
+    <!-- SUCCESS HEADER -->
+    <div class="overflow-hidden rounded-t-2xl bg-red-600 px-6 py-7 sm:px-8">
+
+      <div class="flex flex-col items-center text-center">
+
+        <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white">
+          <svg
+            class="h-8 w-8 text-green-500"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            viewBox="0 0 24 24">
+
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+
+        <h1 class="text-2xl font-bold sm:text-3xl">
+          Booking Confirmed!
+        </h1>
+
+        <p class="mt-2 text-sm text-red-100">
+          Your movie ticket is ready. Enjoy the show!
+        </p>
+
+      </div>
+    </div>
+
+
+    <!-- MAIN TICKET -->
+    <div class="relative bg-gray-900">
+
+      <!-- Ticket cutouts -->
+      <div class="absolute -left-4 top-1/2 h-8 w-8 -translate-y-1/2 rounded-full bg-gray-950"></div>
+      <div class="absolute -right-4 top-1/2 h-8 w-8 -translate-y-1/2 rounded-full bg-gray-950"></div>
+
+      <div class="px-6 py-8 sm:px-8">
+
+        <!-- MOVIE -->
+        <div class="border-b border-gray-800 pb-7 text-center">
+
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-500">
+            Movie
+          </p>
+
+          <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">
+            <%= @ticket.booking.show.movie.title %>
+          </h2>
+
+          <div class="mt-3 flex justify-center">
+            <span class="inline-flex items-center gap-2 rounded-full bg-green-500/10 px-3 py-1.5 text-sm font-medium text-green-400">
+              <span class="h-2 w-2 rounded-full bg-green-400"></span>
+              Booking Confirmed
+            </span>
+          </div>
+
+          <div class="mt-5">
+            <p class="text-xs font-semibold uppercase tracking-widest text-gray-500">
+              Ticket Number
+            </p>
+
+            <p class="mt-1 font-mono text-base font-bold tracking-wide text-white">
+              <%= @ticket.ticket_number %>
+            </p>
+          </div>
+
+        </div>
+
+
+        <!-- SHOW DETAILS -->
+        <div class="grid grid-cols-1 gap-5 border-b border-gray-800 py-7 sm:grid-cols-2">
+
+          <!-- Theatre -->
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-500/10">
+              <svg
+                class="h-5 w-5 text-red-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24">
+
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 21s8-4.5 8-10a8 8 0 10-16 0c0 5.5 8 10 8 10z" />
+
+                <circle cx="12" cy="11" r="2.5" />
+              </svg>
+            </div>
+
+            <div>
+              <p class="text-xs uppercase tracking-wide text-gray-500">
+                Theatre
+              </p>
+
+              <p class="mt-1 font-semibold text-white">
+                <%= @ticket.booking.show.theatre.name %>
+              </p>
+            </div>
+          </div>
+
+
+          <!-- Auditorium -->
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-500/10">
+              <svg
+                class="h-5 w-5 text-red-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24">
+
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 5h16v14H4z" />
+
+                <path
+                  stroke-linecap="round"
+                  d="M8 9h8M8 13h8" />
+              </svg>
+            </div>
+
+            <div>
+              <p class="text-xs uppercase tracking-wide text-gray-500">
+                Auditorium
+              </p>
+
+              <p class="mt-1 font-semibold text-white">
+                <%= @ticket.booking.show.auditorium.name %>
+              </p>
+            </div>
+          </div>
+
+
+          <!-- Date -->
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-500/10">
+              <svg
+                class="h-5 w-5 text-red-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24">
+
+                <rect x="3" y="4" width="18" height="17" rx="2" />
+                <path d="M16 2v4M8 2v4M3 10h18" />
+              </svg>
+            </div>
+
+            <div>
+              <p class="text-xs uppercase tracking-wide text-gray-500">
+                Date
+              </p>
+
+              <p class="mt-1 font-semibold text-white">
+                <%= @ticket.booking.show.start_time.strftime("%d %b %Y") %>
+              </p>
+            </div>
+          </div>
+
+
+          <!-- Time -->
+          <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-red-500/10">
+              <svg
+                class="h-5 w-5 text-red-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24">
+
+                <circle cx="12" cy="12" r="9" />
+
+                <path
+                  stroke-linecap="round"
+                  d="M12 7v5l3 2" />
+              </svg>
+            </div>
+
+            <div>
+              <p class="text-xs uppercase tracking-wide text-gray-500">
+                Time
+              </p>
+
+              <p class="mt-1 font-semibold text-white">
+                <%= @ticket.booking.show.start_time.strftime("%I:%M %p") %>
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- SEATS + PAYMENT -->
+        <div class="grid gap-5 py-7 sm:grid-cols-2">
+
+          <!-- Seats -->
+          <div class="rounded-xl border border-gray-800 bg-gray-950 p-5">
+
+            <p class="text-xs font-semibold uppercase tracking-widest text-gray-500">
+              Seats
+            </p>
+
+            <div class="mt-3 flex flex-wrap gap-2">
+              <% @ticket.booking.booking_seats.each do |booking_seat| %>
+
+                <% seat = booking_seat.show_seat.seat %>
+
+                <span class="rounded-lg bg-red-600 px-3 py-1.5 font-mono text-sm font-bold text-white">
+                  <%= seat.row_name %><%= seat.seat_number %>
+                </span>
+
+              <% end %>
+            </div>
+
+            <p class="mt-3 text-sm text-gray-400">
+              <%= @ticket.booking.booking_seats.count %>
+              <%= "Ticket".pluralize(@ticket.booking.booking_seats.count) %>
+            </p>
+
+          </div>
+
+
+          <!-- Amount -->
+          <div class="rounded-xl border border-gray-800 bg-gray-950 p-5">
+
+            <p class="text-xs font-semibold uppercase tracking-widest text-gray-500">
+              Amount Paid
+            </p>
+
+            <p class="mt-3 text-2xl font-bold text-white">
+              ₹<%= number_with_precision(
+                @ticket.booking.payment.amount,
+                precision: 2
+              ) %>
+            </p>
+
+            <div class="mt-2 flex items-center gap-2 text-sm text-green-400">
+              ✓
+              Paid via Razorpay
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- QR SECTION -->
+    <div class="rounded-b-2xl bg-white px-6 py-8 text-gray-900 sm:px-8">
+
+      <div class="text-center">
+
+        <h3 class="text-lg font-bold sm:text-xl">
+          Show this QR code at the theatre
+        </h3>
+
+        <p class="mt-2 text-sm text-gray-500">
+          Scan this code at the entrance to verify your ticket.
+        </p>
+
+
+        <!-- QR CODE -->
+        <div class="mx-auto mt-6 flex w-fit items-center justify-center rounded-xl border-4 border-red-500 bg-white p-4">
+
+          <div class="qr-wrapper flex h-48 w-48 items-center justify-center overflow-hidden">
+            <%= ticket_qr_code(@ticket) %>
+          </div>
+
+        </div>
+
+
+    
+
+           
+
+         
+
+        </div>
+
+      </div>
+
+
+      <!-- INSTRUCTIONS -->
+      <div class="mx-auto mt-7 rounded-xl bg-gray-900 p-5 text-white">
+
+        <div class="grid gap-5 sm:grid-cols-3">
+
+          <!-- Scan -->
+          <div class="text-center">
+
+            <div class="mx-auto flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/10">
+              <span class="text-red-500">⌗</span>
+            </div>
+
+            <p class="mt-3 text-sm font-semibold">
+              Scan & Enter
+            </p>
+
+            <p class="mt-1 text-xs text-gray-400">
+              Show this QR code at the theatre gate.
+            </p>
+
+          </div>
+
+
+          <!-- Arrive -->
+          <div class="text-center">
+
+            <div class="mx-auto flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/10">
+              <span class="text-red-500">◷</span>
+            </div>
+
+            <p class="mt-3 text-sm font-semibold">
+              Arrive Early
+            </p>
+
+            <p class="mt-1 text-xs text-gray-400">
+              Reach at least 20 minutes before the show.
+            </p>
+
+          </div>
+
+
+          <!-- Enjoy -->
+          <div class="text-center">
+
+            <div class="mx-auto flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/10">
+              <span class="text-red-500">▶</span>
+            </div>
+
+            <p class="mt-3 text-sm font-semibold">
+              Enjoy the Movie
+            </p>
+
+            <p class="mt-1 text-xs text-gray-400">
+              Sit back, relax and enjoy the show!
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ACTION -->
+      <div class="mx-auto mt-6 max-w-md">
+
+        <%= link_to bookings_path,
+            class: "flex items-center justify-center rounded-xl bg-red-600 px-6 py-3.5 font-semibold text-white transition hover:bg-red-700" do %>
+
+          Go to My Bookings
+
+        <% end %>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

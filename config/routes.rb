@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :movies
   resources :shows
+  resources :tickets, only: [ :show ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -95,19 +96,17 @@ patch "/reset-password",
   # Admin users
 
   namespace :admin do
-
     resources :users,
-              only: [:index, :edit, :update]
-
+              only: [ :index, :edit, :update ]
   end
 
 
-  # ==========================
-  # BOOKINGS
-  # ==========================
+# ==========================
+# BOOKINGS
+# ==========================
 
-resources :bookings, only: [:show, :create] do
-  resource :payment, only: [:new, :create]
+resources :bookings, only: [ :show, :create ] do
+  resource :payment, only: [ :new, :create ]
 end
 
 
@@ -133,11 +132,8 @@ end
     get :sales_record, on: :member
 
     resources :auditoriums do
-
       resources :seats
-
     end
-
   end
 
 

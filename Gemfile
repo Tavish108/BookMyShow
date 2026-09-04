@@ -8,7 +8,11 @@ gem "propshaft"
 # gem "sqlite3", ">= 2.1"
 
 gem "pg"
+
+gem "razorpay"
+gem "dotenv-rails", groups: [ :development, :test ]
 gem "bcrypt"
+gem "rqrcode"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -71,5 +75,5 @@ end
 
 gem "tailwindcss-rails", "~> 4.6"
 
-gem "dotenv-rails", "~> 3.2"
+# gem "dotenv-rails", "~> 3.2"
 gem "csv"
