@@ -1,0 +1,325 @@
+<div class="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+
+  <!-- Back Button -->
+  <div>
+    <%= link_to theatre_path(@theatre),
+        class: "inline-flex items-center gap-2 text-sm font-medium text-gray-400 transition hover:text-white" do %>
+      <svg xmlns="http://www.w3.org/2000/svg"
+           class="h-4 w-4"
+           fill="none"
+           viewBox="0 0 24 24"
+           stroke="currentColor">
+        <path stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7" />
+      </svg>
+
+      Back to Theatre
+    <% end %>
+  </div>
+
+
+  <!-- Page Header -->
+  <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+      <div>
+        <p class="text-sm font-medium uppercase tracking-wider text-red-500">
+          Theatre Analytics
+        </p>
+
+        <h1 class="mt-1 text-3xl font-bold text-white">
+          <%= @theatre.name %>
+        </h1>
+
+        <p class="mt-1 text-sm text-gray-400">
+          <%= @theatre.city %>
+        </p>
+      </div>
+
+      <div class="rounded-xl border border-gray-800 bg-gray-950 px-6 py-4 sm:text-right">
+        <p class="text-xs uppercase tracking-wider text-gray-500">
+          Total Collection
+        </p>
+
+        <p class="mt-1 text-2xl font-bold text-green-400">
+          ₹<%= number_with_delimiter(@theatre_report[:collection].to_f.round(2)) %>
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Summary Cards -->
+  <div class="grid gap-4 sm:grid-cols-3">
+
+    <!-- Bookings -->
+    <div class="rounded-2xl border border-gray-800 bg-gray-900 p-5">
+      <div class="flex items-center justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-gray-400">
+            Total Bookings
+          </p>
+
+          <p class="mt-2 text-3xl font-bold text-white">
+            <%= @theatre_report[:bookings] %>
+          </p>
+        </div>
+
+        <div class="rounded-xl bg-gray-800 p-3">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               class="h-6 w-6 text-gray-300"
+               fill="none"
+               viewBox="0 0 24 24"
+               stroke="currentColor">
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h6l5 5v11a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Tickets -->
+    <div class="rounded-2xl border border-gray-800 bg-gray-900 p-5">
+      <div class="flex items-center justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-gray-400">
+            Tickets Sold
+          </p>
+
+          <p class="mt-2 text-3xl font-bold text-white">
+            <%= @theatre_report[:tickets] %>
+          </p>
+        </div>
+
+        <div class="rounded-xl bg-gray-800 p-3">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               class="h-6 w-6 text-gray-300"
+               fill="none"
+               viewBox="0 0 24 24"
+               stroke="currentColor">
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 5v14M9 5v14M5 9h14M5 15h14" />
+          </svg>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Collection -->
+    <div class="rounded-2xl border border-gray-800 bg-gray-900 p-5">
+      <div class="flex items-center justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-gray-400">
+            Collection
+          </p>
+
+          <p class="mt-2 text-3xl font-bold text-green-400">
+            ₹<%= number_with_delimiter(@theatre_report[:collection].to_f.round(2)) %>
+          </p>
+        </div>
+
+        <div class="rounded-xl bg-green-500/10 p-3">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               class="h-6 w-6 text-green-400"
+               fill="none"
+               viewBox="0 0 24 24"
+               stroke="currentColor">
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-10V5m0 14v-2m-7-5a7 7 0 1014 0 7 7 0 00-14 0z" />
+          </svg>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Auditorium Breakdown -->
+  <div class="rounded-2xl border border-gray-800 bg-gray-900">
+
+    <div class="border-b border-gray-800 px-6 py-5">
+      <h2 class="text-lg font-semibold text-white">
+        Auditorium Breakdown
+      </h2>
+
+      <p class="mt-1 text-sm text-gray-500">
+        Booking and collection performance by auditorium.
+      </p>
+    </div>
+
+    <% if @theatre_report[:auditoriums].any? %>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+
+          <thead class="bg-gray-950/50 text-xs uppercase tracking-wider text-gray-500">
+            <tr>
+              <th class="px-6 py-4 font-medium">
+                Auditorium
+              </th>
+
+              <th class="px-6 py-4 font-medium">
+                Bookings
+              </th>
+
+              <th class="px-6 py-4 font-medium">
+                Tickets
+              </th>
+
+              <th class="px-6 py-4 text-right font-medium">
+                Collection
+              </th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-gray-800">
+
+            <% @theatre_report[:auditoriums].each do |auditorium_report| %>
+
+              <tr class="transition hover:bg-gray-800/40">
+
+                <td class="px-6 py-5">
+                  <p class="font-medium text-white">
+                    <%= auditorium_report[:auditorium].name %>
+                  </p>
+                </td>
+
+                <td class="px-6 py-5 text-sm text-gray-300">
+                  <%= auditorium_report[:bookings] %>
+                </td>
+
+                <td class="px-6 py-5 text-sm text-gray-300">
+                  <%= auditorium_report[:tickets] %>
+                </td>
+
+                <td class="px-6 py-5 text-right font-semibold text-green-400">
+                  ₹<%= number_with_delimiter(auditorium_report[:collection].to_f.round(2)) %>
+                </td>
+
+              </tr>
+
+            <% end %>
+
+          </tbody>
+
+        </table>
+      </div>
+
+    <% else %>
+
+      <div class="px-6 py-10 text-center">
+        <p class="text-sm text-gray-500">
+          No auditorium data available yet.
+        </p>
+      </div>
+
+    <% end %>
+
+  </div>
+
+
+  <!-- Movie Breakdown -->
+  <div class="rounded-2xl border border-gray-800 bg-gray-900">
+
+    <div class="border-b border-gray-800 px-6 py-5">
+      <h2 class="text-lg font-semibold text-white">
+        Movie Collection
+      </h2>
+
+      <p class="mt-1 text-sm text-gray-500">
+        Booking and collection performance by movie.
+      </p>
+    </div>
+
+    <% if @theatre_report[:movies].any? %>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+
+          <thead class="bg-gray-950/50 text-xs uppercase tracking-wider text-gray-500">
+            <tr>
+
+              <th class="px-6 py-4 font-medium">
+                Movie
+              </th>
+
+              <th class="px-6 py-4 font-medium">
+                Bookings
+              </th>
+
+              <th class="px-6 py-4 font-medium">
+                Tickets
+              </th>
+
+              <th class="px-6 py-4 text-right font-medium">
+                Collection
+              </th>
+
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-gray-800">
+
+            <% @theatre_report[:movies].each do |movie_report| %>
+
+              <tr class="transition hover:bg-gray-800/40">
+
+                <td class="px-6 py-5">
+                  <p class="font-medium text-white">
+                    <%= movie_report.title %>
+                  </p>
+                </td>
+
+                <td class="px-6 py-5 text-sm text-gray-300">
+                  <%= movie_report.bookings_count %>
+                </td>
+
+                <td class="px-6 py-5 text-sm text-gray-300">
+                  <%= movie_report.tickets_count %>
+                </td>
+
+                <td class="px-6 py-5 text-right font-semibold text-green-400">
+                  ₹<%= number_with_delimiter(movie_report.collection.to_f.round(2)) %>
+                </td>
+
+              </tr>
+
+            <% end %>
+
+          </tbody>
+
+        </table>
+      </div>
+
+    <% else %>
+
+      <div class="px-6 py-10 text-center">
+        <p class="text-sm text-gray-500">
+          No confirmed movie bookings yet.
+        </p>
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>
+

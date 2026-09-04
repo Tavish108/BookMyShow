@@ -123,6 +123,360 @@
 
 </div>
 
+
+<!-- Collection & Booking Analytics -->
+
+<div class="mt-8">
+
+  <div class="mb-6">
+    <p class="text-sm font-semibold uppercase tracking-wider text-red-500">
+      Performance
+    </p>
+
+    <h2 class="mt-2 text-2xl font-bold text-white">
+      Booking & Collection Analytics
+    </h2>
+
+    <p class="mt-1 text-sm text-gray-400">
+      Track confirmed bookings, tickets sold and successful ticket collections.
+    </p>
+  </div>
+
+
+  <% if @theatre_reports.any? %>
+
+    <% total_bookings = @theatre_reports.values.sum { |report| report[:bookings] } %>
+
+    <% total_tickets = @theatre_reports.values.sum { |report| report[:tickets] } %>
+
+    <% total_collection = @theatre_reports.values.sum { |report| report[:collection] } %>
+
+
+    <!-- Overall Summary -->
+
+    <div class="mb-8 grid gap-5 md:grid-cols-3">
+
+      <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6">
+
+        <p class="text-sm text-gray-400">
+          Total Bookings
+        </p>
+
+        <p class="mt-2 text-3xl font-bold text-white">
+          <%= total_bookings %>
+        </p>
+
+      </div>
+
+
+      <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6">
+
+        <p class="text-sm text-gray-400">
+          Tickets Sold
+        </p>
+
+        <p class="mt-2 text-3xl font-bold text-white">
+          <%= total_tickets %>
+        </p>
+
+      </div>
+
+
+      <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6">
+
+        <p class="text-sm text-gray-400">
+          Total Collection
+        </p>
+
+        <p class="mt-2 text-3xl font-bold text-green-400">
+          ₹<%= number_with_delimiter(total_collection.to_f.round(2)) %>
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- Theatre Reports -->
+
+    <div class="space-y-6">
+
+      <% @theatre_reports.each do |theatre, report| %>
+
+        <div class="rounded-2xl border border-gray-800 bg-gray-900 p-6 sm:p-8">
+
+          <!-- Theatre Header -->
+
+          <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+            <div>
+
+              <h3 class="text-2xl font-bold text-white">
+                <%= theatre.name %>
+              </h3>
+
+              <p class="mt-1 text-sm text-gray-400">
+                <%= theatre.city %>
+              </p>
+
+            </div>
+
+
+            <div class="text-left sm:text-right">
+
+              <p class="text-sm text-gray-400">
+                Theatre Collection
+              </p>
+
+              <p class="text-2xl font-bold text-green-400">
+                ₹<%= number_with_delimiter(report[:collection].to_f.round(2)) %>
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- Theatre Summary -->
+
+          <div class="mb-8 grid gap-4 sm:grid-cols-3">
+
+            <div class="rounded-xl border border-gray-800 bg-gray-950 p-4">
+
+              <p class="text-xs uppercase tracking-wide text-gray-500">
+                Bookings
+              </p>
+
+              <p class="mt-2 text-xl font-bold text-white">
+                <%= report[:bookings] %>
+              </p>
+
+            </div>
+
+
+            <div class="rounded-xl border border-gray-800 bg-gray-950 p-4">
+
+              <p class="text-xs uppercase tracking-wide text-gray-500">
+                Tickets Sold
+              </p>
+
+              <p class="mt-2 text-xl font-bold text-white">
+                <%= report[:tickets] %>
+              </p>
+
+            </div>
+
+
+            <div class="rounded-xl border border-gray-800 bg-gray-950 p-4">
+
+              <p class="text-xs uppercase tracking-wide text-gray-500">
+                Collection
+              </p>
+
+              <p class="mt-2 text-xl font-bold text-green-400">
+                ₹<%= number_with_delimiter(report[:collection].to_f.round(2)) %>
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- Auditorium Breakdown -->
+
+          <div class="mb-8">
+
+            <h4 class="mb-4 text-lg font-semibold text-white">
+              Auditorium Breakdown
+            </h4>
+
+
+            <% if report[:auditoriums].any? %>
+
+              <div class="overflow-x-auto">
+
+                <table class="w-full text-left">
+
+                  <thead class="border-b border-gray-800 text-sm text-gray-500">
+
+                    <tr>
+                      <th class="px-4 py-3 font-medium">
+                        Auditorium
+                      </th>
+
+                      <th class="px-4 py-3 font-medium">
+                        Bookings
+                      </th>
+
+                      <th class="px-4 py-3 font-medium">
+                        Tickets
+                      </th>
+
+                      <th class="px-4 py-3 font-medium">
+                        Collection
+                      </th>
+                    </tr>
+
+                  </thead>
+
+
+                  <tbody class="divide-y divide-gray-800">
+
+                    <% report[:auditoriums].each do |auditorium_report| %>
+
+                      <tr class="text-sm">
+
+                        <td class="px-4 py-4 font-medium text-white">
+                          <%= auditorium_report[:auditorium].name %>
+                        </td>
+
+                        <td class="px-4 py-4 text-gray-300">
+                          <%= auditorium_report[:bookings] %>
+                        </td>
+
+                        <td class="px-4 py-4 text-gray-300">
+                          <%= auditorium_report[:tickets] %>
+                        </td>
+
+                        <td class="px-4 py-4 font-semibold text-green-400">
+                          ₹<%= number_with_delimiter(auditorium_report[:collection].to_f.round(2)) %>
+                        </td>
+
+                      </tr>
+
+                    <% end %>
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            <% else %>
+
+              <p class="text-sm text-gray-500">
+                No auditorium data available yet.
+              </p>
+
+            <% end %>
+
+          </div>
+
+
+          <!-- Movie Breakdown -->
+
+          <div>
+
+            <h4 class="mb-4 text-lg font-semibold text-white">
+              Movie Collection
+            </h4>
+
+
+            <% if report[:movies].any? %>
+
+              <div class="overflow-x-auto">
+
+                <table class="w-full text-left">
+
+                  <thead class="border-b border-gray-800 text-sm text-gray-500">
+
+                    <tr>
+
+                      <th class="px-4 py-3 font-medium">
+                        Movie
+                      </th>
+
+                      <th class="px-4 py-3 font-medium">
+                        Bookings
+                      </th>
+
+                      <th class="px-4 py-3 font-medium">
+                        Tickets
+                      </th>
+
+                      <th class="px-4 py-3 font-medium">
+                        Collection
+                      </th>
+
+                    </tr>
+
+                  </thead>
+
+
+                  <tbody class="divide-y divide-gray-800">
+
+                    <% report[:movies].each do |movie_report| %>
+
+                      <tr class="text-sm">
+
+                        <td class="px-4 py-4 font-medium text-white">
+                          <%= movie_report.title %>
+                        </td>
+
+                        <td class="px-4 py-4 text-gray-300">
+                          <%= movie_report.bookings_count %>
+                        </td>
+
+                        <td class="px-4 py-4 text-gray-300">
+                          <%= movie_report.tickets_count %>
+                        </td>
+
+                        <td class="px-4 py-4 font-semibold text-green-400">
+                          ₹<%= number_with_delimiter(movie_report.collection.to_f.round(2)) %>
+                        </td>
+
+                      </tr>
+
+                    <% end %>
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            <% else %>
+
+              <p class="text-sm text-gray-500">
+                No confirmed movie bookings yet.
+              </p>
+
+            <% end %>
+
+          </div>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  <% else %>
+
+    <div class="rounded-xl border border-dashed border-gray-700 bg-gray-950 px-6 py-12 text-center">
+
+      <div class="mb-4 text-4xl">
+        📊
+      </div>
+
+      <h3 class="text-lg font-semibold text-white">
+        No analytics available
+      </h3>
+
+      <p class="mt-2 text-sm text-gray-400">
+        Booking and collection statistics will appear here once your theatres receive confirmed bookings.
+      </p>
+
+    </div>
+
+  <% end %>
+
+</div>
+
+
+
+
+
 <!-- Account Actions -->
 <div class="mt-8 flex flex-col gap-4 border-t border-gray-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
 

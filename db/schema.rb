@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_124712) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_03_085659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -94,12 +94,30 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_124712) do
     t.datetime "created_at", null: false
     t.datetime "paid_at"
     t.string "payment_method"
+    t.string "razorpay_order_id"
+    t.string "razorpay_signature"
+    t.string "razorpay_order_id"
+    t.string "razorpay_signature"
     t.string "status", default: "PENDING", null: false
     t.string "transaction_id"
     t.datetime "updated_at", null: false
     t.index ["booking_id"], name: "index_payments_on_booking_id"
+    t.index ["razorpay_order_id"], name: "index_payments_on_razorpay_order_id", unique: true
+    t.index ["razorpay_order_id"], name: "index_payments_on_razorpay_order_id", unique: true
     t.index ["status"], name: "index_payments_on_status"
     t.index ["transaction_id"], name: "index_payments_on_transaction_id", unique: true
+  end
+
+  create_table "pending_registrations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.datetime "expires_at", null: false
+    t.string "name", null: false
+    t.datetime "otp_sent_at"
+    t.string "password_digest", null: false
+    t.string "phone"
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_pending_registrations_on_email", unique: true
   end
 
   create_table "roles", force: :cascade do |t|
@@ -121,6 +139,66 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_124712) do
     t.index ["auditorium_id"], name: "index_seats_on_auditorium_id"
   end
 
+  create_table "show_seats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "held_until"
+    t.bigint "seat_id", null: false
+    t.bigint "show_id", null: false
+    t.string "status", default: "AVAILABLE", null: false
+    t.datetime "updated_at", null: false
+    t.index ["held_until"], name: "index_show_seats_on_held_until"
+    t.index ["seat_id"], name: "index_show_seats_on_seat_id"
+    t.index ["show_id", "seat_id"], name: "index_show_seats_on_show_id_and_seat_id", unique: true
+    t.index ["show_id"], name: "index_show_seats_on_show_id"
+    t.index ["status"], name: "index_show_seats_on_status"
+  end
+
+  create_table "shows", force: :cascade do |t|
+    t.bigint "auditorium_id", null: false
+    t.datetime "created_at", null: false
+    t.time "end_time", null: false
+    t.bigint "movie_id", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.date "show_date", null: false
+    t.time "start_time", null: false
+    t.string "status", null: false
+    t.bigint "theatre_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auditorium_id"], name: "index_shows_on_auditorium_id"
+    t.index ["movie_id"], name: "index_shows_on_movie_id"
+    t.index ["theatre_id"], name: "index_shows_on_theatre_id"
+  end
+
+  create_table "show_seats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "held_until"
+    t.bigint "seat_id", null: false
+    t.bigint "show_id", null: false
+    t.string "status", default: "AVAILABLE", null: false
+    t.datetime "updated_at", null: false
+    t.index ["held_until"], name: "index_show_seats_on_held_until"
+    t.index ["seat_id"], name: "index_show_seats_on_seat_id"
+    t.index ["show_id", "seat_id"], name: "index_show_seats_on_show_id_and_seat_id", unique: true
+    t.index ["show_id"], name: "index_show_seats_on_show_id"
+    t.index ["status"], name: "index_show_seats_on_status"
+  end
+
+  create_table "shows", force: :cascade do |t|
+    t.bigint "auditorium_id", null: false
+    t.datetime "created_at", null: false
+    t.time "end_time", null: false
+    t.bigint "movie_id", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.date "show_date", null: false
+    t.time "start_time", null: false
+    t.string "status", null: false
+    t.bigint "theatre_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auditorium_id"], name: "index_shows_on_auditorium_id"
+    t.index ["movie_id"], name: "index_shows_on_movie_id"
+    t.index ["theatre_id"], name: "index_shows_on_theatre_id"
+  end
+
   create_table "theatres", force: :cascade do |t|
     t.string "address"
     t.string "city", null: false
@@ -136,6 +214,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_124712) do
     t.index ["city"], name: "index_theatres_on_city"
     t.index ["created_by_id"], name: "index_theatres_on_created_by_id"
     t.index ["status"], name: "index_theatres_on_status"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.bigint "booking_id", null: false
+    t.datetime "created_at", null: false
+    t.string "qr_token", null: false
+    t.string "ticket_number", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_tickets_on_booking_id", unique: true
+    t.index ["qr_token"], name: "index_tickets_on_qr_token", unique: true
+    t.index ["ticket_number"], name: "index_tickets_on_ticket_number", unique: true
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.bigint "booking_id", null: false
+    t.datetime "created_at", null: false
+    t.string "qr_token", null: false
+    t.string "ticket_number", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_tickets_on_booking_id", unique: true
+    t.index ["qr_token"], name: "index_tickets_on_qr_token", unique: true
+    t.index ["ticket_number"], name: "index_tickets_on_ticket_number", unique: true
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -160,6 +260,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_124712) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "verification_otps", force: :cascade do |t|
+    t.integer "attempts", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "expires_at", null: false
+    t.string "otp_digest", null: false
+    t.bigint "pending_registration_id"
+    t.string "purpose", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.datetime "verified_at"
+    t.index ["expires_at"], name: "index_verification_otps_on_expires_at"
+    t.index ["pending_registration_id", "purpose"], name: "index_verification_otps_on_pending_registration_id_and_purpose"
+    t.index ["pending_registration_id"], name: "index_verification_otps_on_pending_registration_id"
+    t.index ["purpose"], name: "index_verification_otps_on_purpose"
+    t.index ["user_id"], name: "index_verification_otps_on_user_id"
+  end
+
   add_foreign_key "auditoria", "theatres"
   add_foreign_key "booking_seats", "bookings"
   add_foreign_key "booking_seats", "show_seats"
@@ -171,7 +288,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_124712) do
   add_foreign_key "movies", "users", column: "created_by_id"
   add_foreign_key "payments", "bookings"
   add_foreign_key "seats", "auditoria"
+  add_foreign_key "show_seats", "seats"
+  add_foreign_key "show_seats", "shows"
+  add_foreign_key "shows", "auditoria"
+  add_foreign_key "shows", "movies"
+  add_foreign_key "shows", "theatres"
+  add_foreign_key "show_seats", "seats"
+  add_foreign_key "show_seats", "shows"
+  add_foreign_key "shows", "auditoria"
+  add_foreign_key "shows", "movies"
+  add_foreign_key "shows", "theatres"
   add_foreign_key "theatres", "users", column: "created_by_id"
+  add_foreign_key "tickets", "bookings"
+  add_foreign_key "tickets", "bookings"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
+  add_foreign_key "verification_otps", "pending_registrations"
+  add_foreign_key "verification_otps", "users"
 end

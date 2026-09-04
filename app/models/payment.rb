@@ -1,7 +1,7 @@
 class Payment < ApplicationRecord
   belongs_to :booking
 
-  STATUSES = %w[PENDING SUCCESS FAILED].freeze
+  STATUSES = %w[PENDING SUCCESS FAILED REFUNDED].freeze
 
   validates :status,
             presence: true,

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :movies
   resources :shows
+  resources :tickets, only: [ :show ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -10,6 +11,19 @@ Rails.application.routes.draw do
 
   get "/register", to: "users#new"
   post "/register", to: "users#create"
+  
+  get "/register/verify",
+    to: "users#verify_registration",
+    as: :verify_registration
+
+post "/register/verify",
+     to: "users#complete_registration_verification"
+
+post  "/register/verify/resend",
+       to: "users#resend_otp",
+       as: :resend_otp
+
+
 
 
   get "/login",
@@ -17,6 +31,30 @@ Rails.application.routes.draw do
 
   post "/login",
        to: "sessions#create"
+
+
+ get "/forgot-password",
+    to: "password_resets#new",
+    as: :forgot_password
+
+post "/forgot-password",
+     to: "password_resets#create"
+
+get "/forgot-password/verify",
+    to: "password_resets#verify",
+    as: :verify_password_reset
+
+post "/forgot-password/verify",
+     to: "password_resets#verify_otp"
+
+get "/reset-password",
+    to: "password_resets#edit",
+    as: :reset_password
+
+patch "/reset-password",
+      to: "password_resets#update"
+
+
 
 
   delete "/logout",
@@ -58,19 +96,17 @@ Rails.application.routes.draw do
   # Admin users
 
   namespace :admin do
-
     resources :users,
-              only: [:index, :edit, :update]
-
+              only: [ :index, :edit, :update ]
   end
 
 
-  # ==========================
-  # BOOKINGS
-  # ==========================
+# ==========================
+# BOOKINGS
+# ==========================
 
-resources :bookings, only: [:show, :create] do
-  resource :payment, only: [:new, :create]
+resources :bookings, only: [ :show, :create ] do
+  resource :payment, only: [ :new, :create ]
 end
 
 
@@ -93,13 +129,11 @@ end
   # ==========================
 
   resources :theatres do
+    get :sales_record, on: :member
 
     resources :auditoriums do
-
       resources :seats
-
     end
-
   end
 
 
