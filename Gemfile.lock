@@ -414,7 +414,7 @@ DEPENDENCIES
   brakeman
   bundler-audit
   capybara
-  csv
+  csv (~> 3.3)
   debug
   dotenv-rails
   image_processing (~> 1.2)

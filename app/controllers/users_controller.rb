@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   def new
     redirect_to dashboard_path_for_current_user if logged_in?
 
@@ -48,7 +47,7 @@ class UsersController < ApplicationController
   def me
     unless logged_in?
       redirect_to login_path, alert: "Please log in first."
-      return
+      nil
     end
   end
 
@@ -192,5 +191,4 @@ end
     otp_sent_at: Time.current
    )
   end
-
 end

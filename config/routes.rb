@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   get "/register", to: "users#new"
   post "/register", to: "users#create"
-  
+
   get "/register/verify",
     to: "users#verify_registration",
     as: :verify_registration
@@ -105,7 +105,7 @@ patch "/reset-password",
 # BOOKINGS
 # ==========================
 
-resources :bookings, only: [ :show, :create ] do
+resources :bookings, only: [ :index, :show, :create ] do
   resource :payment, only: [ :new, :create ]
 end
 
