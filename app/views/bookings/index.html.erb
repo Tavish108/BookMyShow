@@ -3,8 +3,10 @@
   <div class="mx-auto max-w-6xl">
 
     <!-- Header -->
-    <div class="mb-8">
-
+<div class="mb-8">
+  <div class="flex items-center justify-between">
+    
+    <div>
       <h1 class="text-3xl font-bold sm:text-4xl">
         My Bookings
       </h1>
@@ -12,8 +14,12 @@
       <p class="mt-2 text-gray-400">
         View your movie tickets and booking history.
       </p>
-
     </div>
+
+      <%= link_to "Back", user_dashboard_path,
+      class: "shrink-0 mt-6 inline-flex rounded-xl bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700" %>
+    </div>
+</div>
 
 
     <% if @bookings.empty? %>

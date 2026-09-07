@@ -1,0 +1,23 @@
+<h2>Booking Confirmed!</h2>
+
+<p>Hi <%= @user.name %>,</p>
+
+<p>Your movie ticket has been successfully booked.</p>
+
+<p>
+  <strong>Ticket Number:</strong>
+  <%= @ticket.ticket_number %>
+</p>
+
+<p>
+  <strong>Movie:</strong>
+  <%= @booking.show.movie.title %>
+</p>
+
+<p>
+  <strong>Seats:</strong>
+  <% @seats.each_with_index do |booking_seat, index| %>
+    <%= ", " unless index.zero? %>
+    <%= booking_seat.show_seat.seat.row_name %><%= booking_seat.show_seat.seat.seat_number %>
+  <% end %>
+</p>
