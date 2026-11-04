@@ -73,7 +73,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "tailwindcss-rails", "~> 4.6"
+gem "tailwindcss-rails", "~> 4.7"
 
 # gem "dotenv-rails", "~> 3.2"
 
